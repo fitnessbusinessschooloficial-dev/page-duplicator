@@ -7,7 +7,7 @@ const Pagina3 = () => {
   const navigate = useNavigate();
 
   const handleSelect = (age: string) => {
-    console.log("Idade selecionada:", age);
+    localStorage.setItem("userAgeRange", age);
     navigate("/pagina4");
   };
 
