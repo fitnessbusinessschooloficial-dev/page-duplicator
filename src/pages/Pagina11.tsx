@@ -8,14 +8,33 @@ import profileAna4 from "@/assets/profile-ana-4.png";
 import profileAmanda from "@/assets/profile-amanda.png";
 import profileIsabela from "@/assets/profile-isabela.png";
 import profileCarolina from "@/assets/profile-carolina.png";
-// Fotos masculinas (para usuários femininos)
-import profileMale1 from "@/assets/profile-male-1.png";
-import profileMale2 from "@/assets/profile-male-2.png";
-import profileMale3 from "@/assets/profile-male-3.png";
-import profileMale4 from "@/assets/profile-male-4.png";
-import profileMaleLocked1 from "@/assets/profile-male-locked-1.png";
-import profileMaleLocked2 from "@/assets/profile-male-locked-2.png";
-import profileMaleLocked3 from "@/assets/profile-male-locked-3.png";
+
+// Fotos masculinas por faixa etária
+import male1825_1 from "@/assets/male-18-25-1.png";
+import male1825_2 from "@/assets/male-18-25-2.png";
+import male1825_3 from "@/assets/male-18-25-3.png";
+import male1825_4 from "@/assets/male-18-25-4.png";
+
+import male2635_1 from "@/assets/male-26-35-1.png";
+import male2635_2 from "@/assets/male-26-35-2.png";
+import male2635_3 from "@/assets/male-26-35-3.png";
+import male2635_4 from "@/assets/male-26-35-4.png";
+
+import male3645_1 from "@/assets/male-36-45-1.png";
+import male3645_2 from "@/assets/male-36-45-2.png";
+import male3645_3 from "@/assets/male-36-45-3.png";
+import male3645_4 from "@/assets/male-36-45-4.png";
+
+import male4655_1 from "@/assets/male-46-55-1.png";
+import male4655_2 from "@/assets/male-46-55-2.png";
+import male4655_3 from "@/assets/male-46-55-3.png";
+import male4655_4 from "@/assets/male-46-55-4.png";
+
+import male56plus_1 from "@/assets/male-56-plus-1.png";
+import male56plus_2 from "@/assets/male-56-plus-2.png";
+import male56plus_3 from "@/assets/male-56-plus-3.png";
+import male56plus_4 from "@/assets/male-56-plus-4.png";
+
 // Cards de recursos
 import cardEventos from "@/assets/card-eventos.png";
 import cardConteudos from "@/assets/card-conteudos.png";
@@ -25,8 +44,23 @@ import cardGrupos from "@/assets/card-grupos.png";
 const femalePhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
 const femaleNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
 
-const malePhotos = [profileMale1, profileMale2, profileMale3, profileMale4];
-const maleNames = ["Lucas", "Gabriel", "Rafael", "Pedro"];
+// Fotos masculinas organizadas por faixa etária
+const malePhotosByAge: Record<string, string[]> = {
+  "18-25": [male1825_1, male1825_2, male1825_3, male1825_4],
+  "26-35": [male2635_1, male2635_2, male2635_3, male2635_4],
+  "36-45": [male3645_1, male3645_2, male3645_3, male3645_4],
+  "46-55": [male4655_1, male4655_2, male4655_3, male4655_4],
+  "56+": [male56plus_1, male56plus_2, male56plus_3, male56plus_4],
+};
+
+// Nomes e idades por faixa
+const maleDataByAge: Record<string, { names: string[]; ageRange: [number, number] }> = {
+  "18-25": { names: ["Lucas", "Gabriel", "Matheus", "Pedro"], ageRange: [18, 25] },
+  "26-35": { names: ["Rafael", "Felipe", "Bruno", "Thiago"], ageRange: [26, 35] },
+  "36-45": { names: ["Marcelo", "André", "Ricardo", "Eduardo"], ageRange: [36, 45] },
+  "46-55": { names: ["Carlos", "Roberto", "Fernando", "Sérgio"], ageRange: [46, 55] },
+  "56+": { names: ["José", "Antônio", "Paulo", "Luiz"], ageRange: [56, 65] },
+};
 
 const recursos = [
   { image: cardEventos, title: "Eventos Exclusivos", description: "Participe de encontros e eventos" },
@@ -45,28 +79,36 @@ const estadosSiglas: Record<string, string> = {
   "Sergipe": "SE", "Tocantins": "TO"
 };
 
+// Função para gerar idade aleatória dentro da faixa
+const getRandomAge = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 const Pagina11 = () => {
   const navigate = useNavigate();
   
   // Inicializa diretamente do localStorage para evitar delay
   const userGender = localStorage.getItem("userGender");
   const userState = localStorage.getItem("userState") || "Bahia";
+  const userAgeRange = localStorage.getItem("userAgeRange") || "26-35";
   const stateSigla = estadosSiglas[userState] || "BA";
 
-  // Seleciona aleatoriamente uma foto e nome para o perfil desbloqueado
+  // Seleciona aleatoriamente uma foto para o perfil desbloqueado
   const randomIndex = useMemo(() => Math.floor(Math.random() * 4), []);
   
-  // Define os perfis baseado no gênero do usuário
+  // Define os perfis baseado no gênero e idade do usuário
   const profiles = useMemo(() => {
     // Se usuário é feminino, mostra homens. Se masculino, mostra mulheres.
     const showMale = userGender === "feminino";
     
     if (showMale) {
+      const photos = malePhotosByAge[userAgeRange] || malePhotosByAge["26-35"];
+      const data = maleDataByAge[userAgeRange] || maleDataByAge["26-35"];
+      const [minAge, maxAge] = data.ageRange;
+      
       return [
-        { name: maleNames[randomIndex], age: 22 + randomIndex, distance: "4.7 km", state: stateSigla, locked: false, photo: malePhotos[randomIndex], community: "Comunidade Música" },
-        { name: "Felipe", age: 25, distance: "2.2 km", state: stateSigla, locked: true, photo: profileMaleLocked1 },
-        { name: "Thiago", age: 23, distance: "6.4 km", state: stateSigla, locked: true, photo: profileMaleLocked2 },
-        { name: "Bruno", age: 26, distance: "7.9 km", state: stateSigla, locked: true, photo: profileMaleLocked3 },
+        { name: data.names[randomIndex], age: getRandomAge(minAge, maxAge), distance: "4.7 km", state: stateSigla, locked: false, photo: photos[randomIndex], community: "Comunidade Música" },
+        { name: data.names[(randomIndex + 1) % 4], age: getRandomAge(minAge, maxAge), distance: "2.2 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 1) % 4] },
+        { name: data.names[(randomIndex + 2) % 4], age: getRandomAge(minAge, maxAge), distance: "6.4 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 2) % 4] },
+        { name: data.names[(randomIndex + 3) % 4], age: getRandomAge(minAge, maxAge), distance: "7.9 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 3) % 4] },
       ];
     } else {
       return [
@@ -76,7 +118,7 @@ const Pagina11 = () => {
         { name: "Carolina", age: 23, distance: "7.9 km", state: stateSigla, locked: true, photo: profileCarolina },
       ];
     }
-  }, [randomIndex, userGender, stateSigla]);
+  }, [randomIndex, userGender, stateSigla, userAgeRange]);
 
   return (
     <div className="min-h-screen gradient-welcome relative overflow-hidden">
