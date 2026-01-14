@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import QuizLayout from "@/components/quiz/QuizLayout";
+import heartLogo from "@/assets/heart-logo.png";
 
 const Pagina1 = () => {
   const navigate = useNavigate();
@@ -8,8 +9,8 @@ const Pagina1 = () => {
     <QuizLayout>
       {/* Logo */}
       <div className="flex justify-center mb-8">
-        <div className="w-24 h-24 rounded-full gradient-button flex items-center justify-center shadow-2xl">
-          <i className="ri-heart-3-fill text-5xl text-white"></i>
+        <div className="w-24 h-24 rounded-full gradient-button flex items-center justify-center shadow-2xl overflow-hidden">
+          <img src={heartLogo} alt="Coração" className="w-16 h-16 object-contain" />
         </div>
       </div>
 
