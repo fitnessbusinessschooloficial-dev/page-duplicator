@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import profileAna from "@/assets/profile-ana.png";
+import { useMemo } from "react";
+import profileAna1 from "@/assets/profile-ana.png";
+import profileAna2 from "@/assets/profile-ana-2.png";
+import profileAna3 from "@/assets/profile-ana-3.png";
+import profileAna4 from "@/assets/profile-ana-4.png";
 import profileAmanda from "@/assets/profile-amanda.png";
 import profileIsabela from "@/assets/profile-isabela.png";
 import profileCarolina from "@/assets/profile-carolina.png";
 
-const profiles = [
-  { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false, photo: profileAna, community: "Comunidade Música" },
-  { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
-  { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
-  { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
-];
+// Array de fotos reais para rodízio do perfil desbloqueado
+const realPhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
+const realNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
 
 const recursos = [
   { image: "", title: "Esboços Bíblicos" },
@@ -19,6 +20,16 @@ const recursos = [
 
 const Pagina11 = () => {
   const navigate = useNavigate();
+
+  // Seleciona aleatoriamente uma foto e nome para o perfil desbloqueado
+  const randomIndex = useMemo(() => Math.floor(Math.random() * realPhotos.length), []);
+  
+  const profiles = useMemo(() => [
+    { name: realNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: realPhotos[randomIndex], community: "Comunidade Música" },
+    { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
+    { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
+    { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
+  ], [randomIndex]);
 
   return (
     <div className="min-h-screen gradient-welcome relative overflow-hidden">
