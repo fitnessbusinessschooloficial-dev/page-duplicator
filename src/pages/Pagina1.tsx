@@ -33,7 +33,7 @@ const Pagina1 = () => {
             <p className="text-white text-3xl font-bold">5.000+</p>
           </div>
           <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-            <i className="ri-community-line text-3xl text-white"></i>
+            <i className="ri-building-2-fill text-3xl text-white"></i>
           </div>
         </div>
       </div>
