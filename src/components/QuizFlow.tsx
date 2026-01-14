@@ -567,6 +567,21 @@ const QuizFlow = () => {
           <span className="text-white text-xl font-bold">Encontro <span className="text-amber-400">com Fé</span></span>
         </div>
 
+        {/* Video Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-center text-white mb-2">Veja Como Funciona</h2>
+          <p className="text-center text-white/70 mb-6">Conheça nossa plataforma e histórias de sucesso</p>
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+            <iframe
+              src="https://www.youtube.com/embed/QTvgTq9cq8E"
+              title="Como Funciona - Encontro com Fé"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          </div>
+        </div>
+
         <h2 className="text-2xl font-bold text-center text-white mb-8">ESCOLHA SEU PLANO</h2>
         <p className="text-center text-white/70 mb-8">Acesso completo à plataforma</p>
 
