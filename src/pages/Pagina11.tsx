@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import profileAna from "@/assets/profile-ana.png";
+import profileAmanda from "@/assets/profile-amanda.png";
+import profileIsabela from "@/assets/profile-isabela.png";
+import profileCarolina from "@/assets/profile-carolina.png";
 
 const profiles = [
-  { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false, avatar: "👩", community: "Comunidade Música" },
-  { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, avatar: "👩‍🦱" },
-  { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, avatar: "👱‍♀️" },
-  { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, avatar: "👩‍🦰" },
+  { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false, photo: profileAna, community: "Comunidade Música" },
+  { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
+  { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
+  { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
 ];
 
 const recursos = [
@@ -54,13 +58,13 @@ const Pagina11 = () => {
               key={index}
               className="bg-white/10 backdrop-blur-lg rounded-lg p-1.5 border border-white/20 relative overflow-hidden"
             >
-              {/* Profile avatar - compact */}
-              <div className="w-full aspect-[5/4] rounded-md bg-white/20 mb-1 flex items-center justify-center">
-                {profile.locked ? (
-                  <span className="text-xl">🔒</span>
-                ) : (
-                  <span className="text-2xl">{profile.avatar}</span>
-                )}
+              {/* Profile photo */}
+              <div className="w-full aspect-[5/4] rounded-md overflow-hidden mb-1 relative">
+                <img 
+                  src={profile.photo} 
+                  alt={profile.name}
+                  className={`w-full h-full object-cover ${profile.locked ? 'blur-md' : ''}`}
+                />
               </div>
               
               {/* Profile info - minimal */}
