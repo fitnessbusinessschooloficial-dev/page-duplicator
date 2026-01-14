@@ -31,7 +31,7 @@ const QuizLayout = ({ children, showBackButton, onBack }: QuizLayoutProps) => {
           onClick={onBack}
           className="absolute top-6 left-6 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
         >
-          <i className="ri-arrow-left-line text-xl"></i>
+          <span className="text-xl">←</span>
         </button>
       )}
 
