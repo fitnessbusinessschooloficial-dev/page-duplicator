@@ -6,6 +6,8 @@ const Pagina2 = () => {
   const navigate = useNavigate();
 
   const handleSelect = (gender: string) => {
+    // Salva o gênero selecionado no localStorage
+    localStorage.setItem("userGender", gender);
     console.log("Gênero selecionado:", gender);
     navigate("/pagina3");
   };
