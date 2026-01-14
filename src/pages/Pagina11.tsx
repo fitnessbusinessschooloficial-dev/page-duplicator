@@ -7,15 +7,18 @@ import profileAna4 from "@/assets/profile-ana-4.png";
 import profileAmanda from "@/assets/profile-amanda.png";
 import profileIsabela from "@/assets/profile-isabela.png";
 import profileCarolina from "@/assets/profile-carolina.png";
+import cardEventos from "@/assets/card-eventos.png";
+import cardConteudos from "@/assets/card-conteudos.png";
+import cardGrupos from "@/assets/card-grupos.png";
 
 // Array de fotos reais para rodízio do perfil desbloqueado
 const realPhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
 const realNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
 
 const recursos = [
-  { image: "", title: "Esboços Bíblicos" },
-  { image: "", title: "Mapa Mental Bíblico" },
-  { image: "", title: "Cursos Exclusivos" },
+  { image: cardEventos, title: "Eventos Exclusivos", description: "Participe de encontros e eventos" },
+  { image: cardConteudos, title: "Conteúdos Especiais", description: "Materiais sobre relacionamentos" },
+  { image: cardGrupos, title: "Grupos Regionais", description: "Conecte-se com pessoas próximas" },
 ];
 
 const Pagina11 = () => {
@@ -145,10 +148,13 @@ const Pagina11 = () => {
                   )}
                 </div>
                 
-                {/* Title */}
-                <h3 className="text-white font-semibold text-center text-sm group-hover:text-amber-400 transition-colors">
+                {/* Title and Description */}
+                <h3 className="text-white font-semibold text-center text-sm group-hover:text-amber-400 transition-colors mb-1">
                   {recurso.title}
                 </h3>
+                <p className="text-white/60 text-center text-xs">
+                  {recurso.description}
+                </p>
               </div>
             ))}
           </div>
