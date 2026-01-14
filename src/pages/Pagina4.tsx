@@ -17,7 +17,7 @@ const Pagina4 = () => {
 
   const handleContinue = () => {
     if (selectedState) {
-      console.log("Estado selecionado:", selectedState);
+      localStorage.setItem("userState", selectedState);
       navigate("/pagina5");
     }
   };
