@@ -47,17 +47,38 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Christian Romance palette
+        gold: {
+          400: "hsl(var(--gold-400))",
+          500: "hsl(var(--gold-500))",
+          600: "hsl(var(--gold-600))",
+        },
+        rose: {
+          400: "hsl(var(--rose-400))",
+          500: "hsl(var(--rose-500))",
+          600: "hsl(var(--rose-600))",
+        },
+        navy: {
+          400: "hsl(var(--navy-400))",
+          500: "hsl(var(--navy-500))",
+          600: "hsl(var(--navy-600))",
+        },
+        cream: {
+          100: "hsl(var(--cream-100))",
+          200: "hsl(var(--cream-200))",
+        },
+        // Legacy colors for compatibility
         teal: {
-          400: "hsl(var(--teal-400))",
-          500: "hsl(var(--teal-500))",
-          600: "hsl(var(--teal-600))",
+          400: "hsl(var(--gold-400))",
+          500: "hsl(var(--gold-500))",
+          600: "hsl(var(--gold-600))",
         },
         amber: {
-          400: "hsl(var(--amber-400))",
-          500: "hsl(var(--amber-500))",
+          400: "hsl(var(--gold-400))",
+          500: "hsl(var(--gold-500))",
         },
         cyan: {
-          400: "hsl(var(--cyan-400))",
+          400: "hsl(var(--rose-400))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -92,10 +113,25 @@ export default {
             height: "0",
           },
         },
+        "pulse-glow": {
+          "0%, 100%": {
+            opacity: "0.4",
+            transform: "scale(1)",
+          },
+          "50%": {
+            opacity: "0.8",
+            transform: "scale(1.05)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+      },
+      boxShadow: {
+        'glow-gold': '0 0 40px -10px hsla(38, 85%, 55%, 0.4)',
+        'glow-rose': '0 0 40px -10px hsla(345, 50%, 55%, 0.4)',
       },
     },
   },

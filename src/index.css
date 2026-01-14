@@ -6,73 +6,81 @@
 
 @layer base {
   :root {
-    --background: 180 30% 10%;
-    --foreground: 0 0% 100%;
+    /* Nova paleta: Cristãos + Relacionamentos */
+    /* Azul profundo (fé, confiança) + Dourado (luz divina) + Rosa (amor) */
+    
+    --background: 230 25% 10%;
+    --foreground: 45 20% 95%;
 
-    --card: 180 30% 15%;
-    --card-foreground: 0 0% 100%;
+    --card: 230 25% 14%;
+    --card-foreground: 45 20% 95%;
 
-    --popover: 180 30% 15%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 230 25% 14%;
+    --popover-foreground: 45 20% 95%;
 
-    --primary: 174 60% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 38 85% 55%;
+    --primary-foreground: 230 25% 10%;
 
-    --secondary: 38 92% 50%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 345 50% 55%;
+    --secondary-foreground: 45 20% 95%;
 
-    --muted: 180 20% 20%;
-    --muted-foreground: 0 0% 80%;
+    --muted: 230 20% 18%;
+    --muted-foreground: 45 15% 70%;
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 345 50% 55%;
+    --accent-foreground: 45 20% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 180 20% 30%;
-    --input: 180 20% 30%;
-    --ring: 174 60% 45%;
+    --border: 230 20% 22%;
+    --input: 230 20% 22%;
+    --ring: 38 85% 55%;
 
     --radius: 1rem;
 
-    /* Custom colors */
-    --teal-400: 174 60% 45%;
-    --teal-500: 174 70% 40%;
-    --teal-600: 174 80% 35%;
-    --amber-400: 38 92% 50%;
-    --amber-500: 38 92% 45%;
-    --cyan-400: 188 78% 51%;
+    /* Custom colors - Christian Romance palette */
+    --gold-400: 38 85% 55%;
+    --gold-500: 38 90% 50%;
+    --gold-600: 38 95% 45%;
+    --rose-400: 345 50% 55%;
+    --rose-500: 345 55% 50%;
+    --rose-600: 345 60% 45%;
+    --navy-400: 230 40% 40%;
+    --navy-500: 230 45% 30%;
+    --navy-600: 230 50% 20%;
+    --cream-100: 45 30% 95%;
+    --cream-200: 45 25% 90%;
   }
 
   .dark {
-    --background: 180 30% 10%;
-    --foreground: 0 0% 100%;
+    --background: 230 25% 10%;
+    --foreground: 45 20% 95%;
 
-    --card: 180 30% 15%;
-    --card-foreground: 0 0% 100%;
+    --card: 230 25% 14%;
+    --card-foreground: 45 20% 95%;
 
-    --popover: 180 30% 15%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 230 25% 14%;
+    --popover-foreground: 45 20% 95%;
 
-    --primary: 174 60% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 38 85% 55%;
+    --primary-foreground: 230 25% 10%;
 
-    --secondary: 38 92% 50%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 345 50% 55%;
+    --secondary-foreground: 45 20% 95%;
 
-    --muted: 180 20% 20%;
-    --muted-foreground: 0 0% 80%;
+    --muted: 230 20% 18%;
+    --muted-foreground: 45 15% 70%;
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 345 50% 55%;
+    --accent-foreground: 45 20% 95%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 180 20% 30%;
-    --input: 180 20% 30%;
-    --ring: 174 60% 45%;
+    --border: 230 20% 22%;
+    --input: 230 20% 22%;
+    --ring: 38 85% 55%;
   }
 }
 
@@ -86,24 +94,64 @@
   }
 }
 
-/* Gradient Welcome Background */
+/* Gradient Welcome Background - Deep navy with subtle warmth */
 .gradient-welcome {
   background: linear-gradient(
-    135deg,
-    hsl(180, 30%, 8%) 0%,
-    hsl(180, 40%, 12%) 50%,
-    hsl(180, 30%, 10%) 100%
+    160deg,
+    hsl(230, 30%, 8%) 0%,
+    hsl(230, 25%, 12%) 40%,
+    hsl(260, 20%, 14%) 70%,
+    hsl(230, 30%, 10%) 100%
   );
 }
 
-/* Gradient Button */
+/* Gradient Button - Gold with rose accent */
 .gradient-button {
   background: linear-gradient(
     135deg,
-    hsl(174, 60%, 45%) 0%,
-    hsl(174, 80%, 35%) 50%,
-    hsl(188, 78%, 41%) 100%
+    hsl(38, 85%, 55%) 0%,
+    hsl(38, 90%, 50%) 50%,
+    hsl(345, 50%, 55%) 100%
   );
+}
+
+/* Gradient Card Hover */
+.gradient-card {
+  background: linear-gradient(
+    145deg,
+    hsl(230, 25%, 16%) 0%,
+    hsl(230, 20%, 14%) 100%
+  );
+}
+
+/* Gradient Border Effect */
+.gradient-border {
+  background: linear-gradient(
+    135deg,
+    hsl(38, 85%, 55%) 0%,
+    hsl(345, 50%, 55%) 100%
+  );
+}
+
+/* Shimmer effect for premium elements */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsla(38, 85%, 55%, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Animation keyframes */
@@ -118,4 +166,31 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* Glow effect for icons */
+.glow-gold {
+  filter: drop-shadow(0 0 20px hsla(38, 85%, 55%, 0.4));
+}
+
+.glow-rose {
+  filter: drop-shadow(0 0 20px hsla(345, 50%, 55%, 0.4));
+}
+
+/* Subtle grain texture overlay */
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, hsl(38, 85%, 55%) 0%, hsl(345, 50%, 55%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
