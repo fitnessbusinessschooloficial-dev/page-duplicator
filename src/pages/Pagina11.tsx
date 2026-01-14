@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+// Fotos femininas (para usuários masculinos)
 import profileAna1 from "@/assets/profile-ana.png";
 import profileAna2 from "@/assets/profile-ana-2.png";
 import profileAna3 from "@/assets/profile-ana-3.png";
@@ -7,13 +8,25 @@ import profileAna4 from "@/assets/profile-ana-4.png";
 import profileAmanda from "@/assets/profile-amanda.png";
 import profileIsabela from "@/assets/profile-isabela.png";
 import profileCarolina from "@/assets/profile-carolina.png";
+// Fotos masculinas (para usuários femininos)
+import profileMale1 from "@/assets/profile-male-1.png";
+import profileMale2 from "@/assets/profile-male-2.png";
+import profileMale3 from "@/assets/profile-male-3.png";
+import profileMale4 from "@/assets/profile-male-4.png";
+import profileMaleLocked1 from "@/assets/profile-male-locked-1.png";
+import profileMaleLocked2 from "@/assets/profile-male-locked-2.png";
+import profileMaleLocked3 from "@/assets/profile-male-locked-3.png";
+// Cards de recursos
 import cardEventos from "@/assets/card-eventos.png";
 import cardConteudos from "@/assets/card-conteudos.png";
 import cardGrupos from "@/assets/card-grupos.png";
 
-// Array de fotos reais para rodízio do perfil desbloqueado
-const realPhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
-const realNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
+// Arrays de fotos reais para rodízio do perfil desbloqueado
+const femalePhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
+const femaleNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
+
+const malePhotos = [profileMale1, profileMale2, profileMale3, profileMale4];
+const maleNames = ["Lucas", "Gabriel", "Rafael", "Pedro"];
 
 const recursos = [
   { image: cardEventos, title: "Eventos Exclusivos", description: "Participe de encontros e eventos" },
@@ -23,16 +36,38 @@ const recursos = [
 
 const Pagina11 = () => {
   const navigate = useNavigate();
+  const [userGender, setUserGender] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Recupera o gênero do localStorage
+    const gender = localStorage.getItem("userGender");
+    setUserGender(gender);
+  }, []);
 
   // Seleciona aleatoriamente uma foto e nome para o perfil desbloqueado
-  const randomIndex = useMemo(() => Math.floor(Math.random() * realPhotos.length), []);
+  const randomIndex = useMemo(() => Math.floor(Math.random() * 4), []);
   
-  const profiles = useMemo(() => [
-    { name: realNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: realPhotos[randomIndex], community: "Comunidade Música" },
-    { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
-    { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
-    { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
-  ], [randomIndex]);
+  // Define os perfis baseado no gênero do usuário
+  const profiles = useMemo(() => {
+    // Se usuário é feminino, mostra homens. Se masculino, mostra mulheres.
+    const showMale = userGender === "feminino";
+    
+    if (showMale) {
+      return [
+        { name: maleNames[randomIndex], age: 22 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: malePhotos[randomIndex], community: "Comunidade Música" },
+        { name: "Felipe", age: 25, distance: "2.2 km", state: "BA", locked: true, photo: profileMaleLocked1 },
+        { name: "Thiago", age: 23, distance: "6.4 km", state: "BA", locked: true, photo: profileMaleLocked2 },
+        { name: "Bruno", age: 26, distance: "7.9 km", state: "BA", locked: true, photo: profileMaleLocked3 },
+      ];
+    } else {
+      return [
+        { name: femaleNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: femalePhotos[randomIndex], community: "Comunidade Música" },
+        { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
+        { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
+        { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
+      ];
+    }
+  }, [randomIndex, userGender]);
 
   return (
     <div className="min-h-screen gradient-welcome relative overflow-hidden">
