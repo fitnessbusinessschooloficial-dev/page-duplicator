@@ -1,12 +1,13 @@
+import { LucideIcon } from "lucide-react";
+
 interface QuizOptionProps {
-  icon?: string;
-  emoji?: string;
+  icon?: LucideIcon;
   label: string;
   onClick: () => void;
   selected?: boolean;
 }
 
-const QuizOption = ({ icon, emoji, label, onClick, selected }: QuizOptionProps) => {
+const QuizOption = ({ icon: Icon, label, onClick, selected }: QuizOptionProps) => {
   return (
     <button
       onClick={onClick}
@@ -14,13 +15,9 @@ const QuizOption = ({ icon, emoji, label, onClick, selected }: QuizOptionProps) 
         selected ? 'bg-white/10 border-gold-400/50 shadow-glow-gold' : ''
       }`}
     >
-      {(icon || emoji) && (
+      {Icon && (
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-400/20 to-rose-400/10 flex items-center justify-center flex-shrink-0 border border-white/10 group-hover:border-gold-400/30 transition-colors">
-          {emoji ? (
-            <span className="text-2xl">{emoji}</span>
-          ) : (
-            <i className={`${icon} text-2xl text-cream-100`}></i>
-          )}
+          <Icon className="w-6 h-6 text-gold-400" />
         </div>
       )}
       <span className="text-cream-100 text-lg font-medium group-hover:text-gold-400 transition-colors">{label}</span>
