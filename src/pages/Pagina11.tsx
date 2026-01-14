@@ -1,13 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
-// Fotos femininas (para usuários masculinos)
-import profileAna1 from "@/assets/profile-ana.png";
-import profileAna2 from "@/assets/profile-ana-2.png";
-import profileAna3 from "@/assets/profile-ana-3.png";
-import profileAna4 from "@/assets/profile-ana-4.png";
-import profileAmanda from "@/assets/profile-amanda.png";
-import profileIsabela from "@/assets/profile-isabela.png";
-import profileCarolina from "@/assets/profile-carolina.png";
 
 // Fotos masculinas por faixa etária
 import male1825_1 from "@/assets/male-18-25-1.png";
@@ -35,14 +27,36 @@ import male56plus_2 from "@/assets/male-56-plus-2.png";
 import male56plus_3 from "@/assets/male-56-plus-3.png";
 import male56plus_4 from "@/assets/male-56-plus-4.png";
 
+// Fotos femininas por faixa etária
+import female1825_1 from "@/assets/female-18-25-1.png";
+import female1825_2 from "@/assets/female-18-25-2.png";
+import female1825_3 from "@/assets/female-18-25-3.png";
+import female1825_4 from "@/assets/female-18-25-4.png";
+
+import female2635_1 from "@/assets/female-26-35-1.png";
+import female2635_2 from "@/assets/female-26-35-2.png";
+import female2635_3 from "@/assets/female-26-35-3.png";
+import female2635_4 from "@/assets/female-26-35-4.png";
+
+import female3645_1 from "@/assets/female-36-45-1.png";
+import female3645_2 from "@/assets/female-36-45-2.png";
+import female3645_3 from "@/assets/female-36-45-3.png";
+import female3645_4 from "@/assets/female-36-45-4.png";
+
+import female4655_1 from "@/assets/female-46-55-1.png";
+import female4655_2 from "@/assets/female-46-55-2.png";
+import female4655_3 from "@/assets/female-46-55-3.png";
+import female4655_4 from "@/assets/female-46-55-4.png";
+
+import female56plus_1 from "@/assets/female-56-plus-1.png";
+import female56plus_2 from "@/assets/female-56-plus-2.png";
+import female56plus_3 from "@/assets/female-56-plus-3.png";
+import female56plus_4 from "@/assets/female-56-plus-4.png";
+
 // Cards de recursos
 import cardEventos from "@/assets/card-eventos.png";
 import cardConteudos from "@/assets/card-conteudos.png";
 import cardGrupos from "@/assets/card-grupos.png";
-
-// Arrays de fotos reais para rodízio do perfil desbloqueado
-const femalePhotos = [profileAna1, profileAna2, profileAna3, profileAna4];
-const femaleNames = ["Ana", "Mariana", "Juliana", "Beatriz"];
 
 // Fotos masculinas organizadas por faixa etária
 const malePhotosByAge: Record<string, string[]> = {
@@ -53,13 +67,31 @@ const malePhotosByAge: Record<string, string[]> = {
   "56+": [male56plus_1, male56plus_2, male56plus_3, male56plus_4],
 };
 
-// Nomes e idades por faixa
+// Fotos femininas organizadas por faixa etária
+const femalePhotosByAge: Record<string, string[]> = {
+  "18-25": [female1825_1, female1825_2, female1825_3, female1825_4],
+  "26-35": [female2635_1, female2635_2, female2635_3, female2635_4],
+  "36-45": [female3645_1, female3645_2, female3645_3, female3645_4],
+  "46-55": [female4655_1, female4655_2, female4655_3, female4655_4],
+  "56+": [female56plus_1, female56plus_2, female56plus_3, female56plus_4],
+};
+
+// Nomes e idades masculinos por faixa
 const maleDataByAge: Record<string, { names: string[]; ageRange: [number, number] }> = {
   "18-25": { names: ["Lucas", "Gabriel", "Matheus", "Pedro"], ageRange: [18, 25] },
   "26-35": { names: ["Rafael", "Felipe", "Bruno", "Thiago"], ageRange: [26, 35] },
   "36-45": { names: ["Marcelo", "André", "Ricardo", "Eduardo"], ageRange: [36, 45] },
   "46-55": { names: ["Carlos", "Roberto", "Fernando", "Sérgio"], ageRange: [46, 55] },
   "56+": { names: ["José", "Antônio", "Paulo", "Luiz"], ageRange: [56, 65] },
+};
+
+// Nomes e idades femininos por faixa
+const femaleDataByAge: Record<string, { names: string[]; ageRange: [number, number] }> = {
+  "18-25": { names: ["Ana", "Mariana", "Juliana", "Beatriz"], ageRange: [18, 25] },
+  "26-35": { names: ["Camila", "Fernanda", "Larissa", "Patrícia"], ageRange: [26, 35] },
+  "36-45": { names: ["Carla", "Renata", "Adriana", "Mônica"], ageRange: [36, 45] },
+  "46-55": { names: ["Sandra", "Cláudia", "Regina", "Teresa"], ageRange: [46, 55] },
+  "56+": { names: ["Maria", "Helena", "Rosa", "Lúcia"], ageRange: [56, 65] },
 };
 
 const recursos = [
@@ -111,11 +143,15 @@ const Pagina11 = () => {
         { name: data.names[(randomIndex + 3) % 4], age: getRandomAge(minAge, maxAge), distance: "7.9 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 3) % 4] },
       ];
     } else {
+      const photos = femalePhotosByAge[userAgeRange] || femalePhotosByAge["26-35"];
+      const data = femaleDataByAge[userAgeRange] || femaleDataByAge["26-35"];
+      const [minAge, maxAge] = data.ageRange;
+      
       return [
-        { name: femaleNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: stateSigla, locked: false, photo: femalePhotos[randomIndex], community: "Comunidade Música" },
-        { name: "Amanda", age: 23, distance: "2.2 km", state: stateSigla, locked: true, photo: profileAmanda },
-        { name: "Isabela", age: 21, distance: "6.4 km", state: stateSigla, locked: true, photo: profileIsabela },
-        { name: "Carolina", age: 23, distance: "7.9 km", state: stateSigla, locked: true, photo: profileCarolina },
+        { name: data.names[randomIndex], age: getRandomAge(minAge, maxAge), distance: "4.7 km", state: stateSigla, locked: false, photo: photos[randomIndex], community: "Comunidade Música" },
+        { name: data.names[(randomIndex + 1) % 4], age: getRandomAge(minAge, maxAge), distance: "2.2 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 1) % 4] },
+        { name: data.names[(randomIndex + 2) % 4], age: getRandomAge(minAge, maxAge), distance: "6.4 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 2) % 4] },
+        { name: data.names[(randomIndex + 3) % 4], age: getRandomAge(minAge, maxAge), distance: "7.9 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 3) % 4] },
       ];
     }
   }, [randomIndex, userGender, stateSigla, userAgeRange]);
