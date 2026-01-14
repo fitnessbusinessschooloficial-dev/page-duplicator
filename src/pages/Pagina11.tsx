@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import QuizLayout from "@/components/quiz/QuizLayout";
 
 const profiles = [
   { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false, avatar: "👩", community: "Comunidade Música" },
@@ -12,12 +11,6 @@ const recursos = [
   { image: "", title: "Esboços Bíblicos" },
   { image: "", title: "Mapa Mental Bíblico" },
   { image: "", title: "Cursos Exclusivos" },
-];
-
-const gruposRegionais = [
-  { emoji: "💑", title: "Tinder +30 Anos", description: "Relacionamentos cristãos" },
-  { emoji: "💍", title: "Tinder +40 Anos", description: "Relacionamentos maduros" },
-  { emoji: "👴👵", title: "Tinder +60 Anos", description: "Conexões especiais" },
 ];
 
 const Pagina11 = () => {
@@ -158,61 +151,6 @@ const Pagina11 = () => {
             ))}
           </div>
         </div>
-
-        {/* Bem-vindo ao Portal Cristão */}
-        <div className="bg-gradient-to-r from-teal-500/20 to-amber-500/20 backdrop-blur-lg rounded-3xl p-6 mb-10 border border-white/20 text-center">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center mx-auto mb-4">
-            <span className="text-3xl">⛪</span>
-          </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Bem-vindo ao Portal Cristão</h2>
-          <p className="text-white/70 mb-4">Escolha uma opção para continuar</p>
-          <div className="flex gap-3 justify-center">
-            <button className="px-6 py-2 bg-white/20 rounded-xl text-white text-sm hover:bg-white/30 transition-colors">
-              Grupos Gerais
-            </button>
-            <button className="px-6 py-2 gradient-button rounded-xl text-white text-sm hover:scale-105 transition-transform">
-              Explorar
-            </button>
-          </div>
-        </div>
-
-        {/* Grupos Regionais */}
-        <div className="mb-10">
-          <h2 className="text-2xl font-bold text-center text-white mb-2">
-            <span className="mr-2">🗺️</span>
-            Grupos Regionais
-          </h2>
-          <p className="text-center text-white/70 mb-6">
-            Conecte-se com pessoas próximas
-          </p>
-
-          <div className="space-y-3">
-            {gruposRegionais.map((grupo, index) => (
-              <div
-                key={index}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 flex items-center gap-4 hover:bg-white/20 transition-colors cursor-pointer"
-              >
-                <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">{grupo.emoji}</span>
-                </div>
-                <div className="flex-grow">
-                  <h3 className="text-white font-semibold">{grupo.title}</h3>
-                  <p className="text-white/60 text-sm">{grupo.description}</p>
-                </div>
-                <span className="text-white/40 text-xl">→</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Final CTA */}
-        <button
-          onClick={() => navigate("/pagina12")}
-          className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2"
-        >
-          Ver Planos de Acesso
-          <span className="text-2xl">→</span>
-        </button>
       </div>
     </div>
   );
