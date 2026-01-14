@@ -12,15 +12,22 @@ const Pagina7 = () => {
   };
 
   const goals = [
-    { icon: "ri-heart-3-line", label: "Casamento" },
-    { icon: "ri-hearts-line", label: "Namoro sério" },
-    { icon: "ri-user-search-line", label: "Conhecer pessoas" },
-    { icon: "ri-user-heart-line", label: "Amizade" },
+    { emoji: "💍", label: "Casamento" },
+    { emoji: "💕", label: "Namoro sério" },
+    { emoji: "🔍", label: "Conhecer pessoas" },
+    { emoji: "🤝", label: "Amizade" },
   ];
 
   return (
     <QuizLayout showBackButton onBack={() => navigate("/pagina6")}>
       <QuizProgress current={5} total={8} />
+
+      {/* Header icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
+          <span className="text-3xl">💖</span>
+        </div>
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-white mb-8">
@@ -32,7 +39,7 @@ const Pagina7 = () => {
         {goals.map((goal) => (
           <QuizOption
             key={goal.label}
-            icon={goal.icon}
+            emoji={goal.emoji}
             label={goal.label}
             onClick={() => handleSelect(goal.label)}
           />

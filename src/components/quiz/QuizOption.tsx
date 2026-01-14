@@ -1,11 +1,12 @@
 interface QuizOptionProps {
   icon?: string;
+  emoji?: string;
   label: string;
   onClick: () => void;
   selected?: boolean;
 }
 
-const QuizOption = ({ icon, label, onClick, selected }: QuizOptionProps) => {
+const QuizOption = ({ icon, emoji, label, onClick, selected }: QuizOptionProps) => {
   return (
     <button
       onClick={onClick}
@@ -13,9 +14,13 @@ const QuizOption = ({ icon, label, onClick, selected }: QuizOptionProps) => {
         selected ? 'bg-white/20 border-amber-400/50' : ''
       }`}
     >
-      {icon && (
+      {(icon || emoji) && (
         <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-          <i className={`${icon} text-2xl text-white`}></i>
+          {emoji ? (
+            <span className="text-2xl">{emoji}</span>
+          ) : (
+            <i className={`${icon} text-2xl text-white`}></i>
+          )}
         </div>
       )}
       <span className="text-white text-lg font-medium">{label}</span>

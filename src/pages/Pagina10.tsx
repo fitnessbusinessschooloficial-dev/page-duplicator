@@ -12,15 +12,22 @@ const Pagina10 = () => {
   };
 
   const options = [
-    { icon: "ri-parent-line", label: "Tenho filhos" },
-    { icon: "ri-heart-add-line", label: "Quero ter" },
-    { icon: "ri-question-line", label: "Talvez futuramente" },
-    { icon: "ri-close-circle-line", label: "Não quero" },
+    { emoji: "👨‍👩‍👧", label: "Tenho filhos" },
+    { emoji: "👶", label: "Quero ter" },
+    { emoji: "🤔", label: "Talvez futuramente" },
+    { emoji: "🚫", label: "Não quero" },
   ];
 
   return (
     <QuizLayout showBackButton onBack={() => navigate("/pagina9")}>
       <QuizProgress current={8} total={8} />
+
+      {/* Header icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
+          <span className="text-3xl">👪</span>
+        </div>
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-white mb-8">
@@ -32,7 +39,7 @@ const Pagina10 = () => {
         {options.map((opt) => (
           <QuizOption
             key={opt.label}
-            icon={opt.icon}
+            emoji={opt.emoji}
             label={opt.label}
             onClick={() => handleSelect(opt.label)}
           />

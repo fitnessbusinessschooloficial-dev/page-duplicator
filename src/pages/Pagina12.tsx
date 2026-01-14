@@ -1,11 +1,13 @@
 import QuizLayout from "@/components/quiz/QuizLayout";
 import { useNavigate } from "react-router-dom";
+import heartLogo from "@/assets/heart-logo.png";
 
 const plans = [
   {
     name: "ACESSO SEMANAL",
     price: "R$ 8,00",
     period: "7 dias de acesso",
+    emoji: "⚡",
     features: [
       "Perfil completo + fotos",
       "Chat básico",
@@ -17,6 +19,7 @@ const plans = [
     name: "ACESSO MENSAL",
     price: "R$ 14,00",
     period: "30 dias de acesso",
+    emoji: "🌟",
     features: [
       "Todos os recursos semanal",
       "Conexões ilimitadas",
@@ -30,6 +33,7 @@ const plans = [
     name: "ACESSO ANUAL",
     price: "R$ 20,00",
     period: "365 dias de acesso",
+    emoji: "👑",
     features: [
       "Todos os recursos mensal",
       "Chamadas de vídeo",
@@ -42,10 +46,10 @@ const plans = [
 ];
 
 const stats = [
-  { value: "27", label: "Estados" },
-  { value: "5.000+", label: "Membros" },
-  { value: "100+", label: "Grupos" },
-  { value: "24/7", label: "Suporte" },
+  { value: "27", label: "Estados", emoji: "🗺️" },
+  { value: "5.000+", label: "Membros", emoji: "👥" },
+  { value: "100+", label: "Grupos", emoji: "💬" },
+  { value: "24/7", label: "Suporte", emoji: "🎧" },
 ];
 
 const Pagina12 = () => {
@@ -66,13 +70,13 @@ const Pagina12 = () => {
           onClick={() => navigate("/pagina11")}
           className="mb-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
         >
-          <i className="ri-arrow-left-line text-xl"></i>
+          <span className="text-xl">←</span>
         </button>
 
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="w-10 h-10 rounded-full gradient-button flex items-center justify-center">
-            <i className="ri-heart-3-fill text-xl text-white"></i>
+          <div className="w-10 h-10 rounded-full overflow-hidden">
+            <img src={heartLogo} alt="Logo" className="w-full h-full object-cover" />
           </div>
           <span className="text-white text-xl font-bold">Encontro <span className="text-amber-400">com Fé</span></span>
         </div>
@@ -102,14 +106,19 @@ const Pagina12 = () => {
                 </div>
               )}
 
-              <h3 className="text-white font-bold text-center mb-2 mt-2">{plan.name}</h3>
+              {/* Plan emoji */}
+              <div className="flex justify-center mb-3 mt-2">
+                <span className="text-4xl">{plan.emoji}</span>
+              </div>
+
+              <h3 className="text-white font-bold text-center mb-2">{plan.name}</h3>
               <p className="text-3xl font-bold text-center text-white mb-1">{plan.price}</p>
               <p className="text-white/60 text-sm text-center mb-4">{plan.period}</p>
 
               <ul className="space-y-2 mb-6">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-center gap-2 text-white/80 text-sm">
-                    <i className="ri-check-line text-teal-400"></i>
+                    <span className="text-teal-400">✓</span>
                     {feature}
                   </li>
                 ))}
@@ -129,7 +138,7 @@ const Pagina12 = () => {
         {/* Guarantee */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 mb-8 border border-white/20">
           <div className="flex items-start gap-3">
-            <i className="ri-shield-check-line text-2xl text-teal-400 flex-shrink-0"></i>
+            <span className="text-2xl flex-shrink-0">🛡️</span>
             <div>
               <p className="text-white font-semibold mb-1">GARANTIA LEGAL</p>
               <p className="text-white/70 text-sm">
@@ -144,6 +153,7 @@ const Pagina12 = () => {
         <div className="grid grid-cols-4 gap-4 mb-8">
           {stats.map((stat, index) => (
             <div key={index} className="text-center">
+              <div className="text-2xl mb-1">{stat.emoji}</div>
               <p className="text-2xl font-bold text-amber-400">{stat.value}</p>
               <p className="text-white/60 text-sm">{stat.label}</p>
             </div>

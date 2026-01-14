@@ -44,21 +44,21 @@ const Pagina1 = () => {
         className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2"
       >
         Iniciar Agora
-        <i className="ri-arrow-right-line text-2xl"></i>
+        <span className="text-2xl">→</span>
       </button>
 
       {/* Trust badges */}
       <div className="mt-8 flex justify-center gap-6 text-white/60 text-sm">
         <div className="flex items-center gap-1">
-          <i className="ri-shield-check-line"></i>
+          <span>🛡️</span>
           <span>Seguro</span>
         </div>
         <div className="flex items-center gap-1">
-          <i className="ri-lock-line"></i>
+          <span>🔒</span>
           <span>Privado</span>
         </div>
         <div className="flex items-center gap-1">
-          <i className="ri-verified-badge-line"></i>
+          <span>✅</span>
           <span>Verificado</span>
         </div>
       </div>

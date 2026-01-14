@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import QuizLayout from "@/components/quiz/QuizLayout";
 
 const profiles = [
-  { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false },
-  { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true },
-  { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true },
-  { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true },
+  { name: "Ana", age: 20, distance: "4.7 km", state: "BA", locked: false, avatar: "👩" },
+  { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, avatar: "👩‍🦱" },
+  { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, avatar: "👱‍♀️" },
+  { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, avatar: "👩‍🦰" },
 ];
 
 const Pagina11 = () => {
@@ -16,7 +16,7 @@ const Pagina11 = () => {
       {/* Success icon */}
       <div className="flex justify-center mb-6">
         <div className="w-20 h-20 rounded-full gradient-button flex items-center justify-center shadow-2xl">
-          <i className="ri-heart-3-fill text-4xl text-white"></i>
+          <span className="text-4xl">💕</span>
         </div>
       </div>
 
@@ -35,15 +35,15 @@ const Pagina11 = () => {
             key={index}
             className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 relative overflow-hidden"
           >
-            {/* Profile avatar placeholder */}
+            {/* Profile avatar */}
             <div className="w-full aspect-square rounded-xl bg-white/20 mb-3 flex items-center justify-center">
               {profile.locked ? (
                 <div className="text-center">
-                  <i className="ri-lock-line text-3xl text-white/60"></i>
+                  <span className="text-4xl">🔒</span>
                   <p className="text-white/60 text-xs mt-1">Perfil Bloqueado</p>
                 </div>
               ) : (
-                <i className="ri-user-line text-4xl text-white/60"></i>
+                <span className="text-5xl">{profile.avatar}</span>
               )}
             </div>
             
@@ -66,7 +66,7 @@ const Pagina11 = () => {
       {/* Unlock message */}
       <div className="bg-amber-400/20 rounded-2xl p-4 mb-6 border border-amber-400/30">
         <p className="text-amber-400 text-center text-sm">
-          <i className="ri-lock-unlock-line mr-2"></i>
+          <span className="mr-2">🔓</span>
           3 perfis bloqueados. Desbloqueie e comece a se conectar
         </p>
       </div>
@@ -77,7 +77,7 @@ const Pagina11 = () => {
         className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2"
       >
         Desbloquear Perfis
-        <i className="ri-arrow-right-line text-2xl"></i>
+        <span className="text-2xl">→</span>
       </button>
     </QuizLayout>
   );
