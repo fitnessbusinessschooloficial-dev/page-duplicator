@@ -9,12 +9,9 @@ const profiles = [
 ];
 
 const recursos = [
-  { emoji: "📖", title: "Esboços Bíblicos Especiais", description: "Material exclusivo para estudos aprofundados" },
-  { emoji: "🧠", title: "Mapa Mental Bíblico", description: "Visualização estruturada do conhecimento bíblico" },
-  { emoji: "🎓", title: "Cursos", description: "Conhecimento bíblico aprofundado e detalhado" },
-  { emoji: "📚", title: "Manuais Bíblicos", description: "Guias práticos para estudo bíblico" },
-  { emoji: "🎉", title: "Eventos Exclusivos", description: "Participe de encontros e eventos" },
-  { emoji: "💕", title: "Conteúdos Especiais", description: "Materiais sobre relacionamentos" },
+  { image: "", title: "Esboços Bíblicos" },
+  { image: "", title: "Mapa Mental Bíblico" },
+  { image: "", title: "Cursos Exclusivos" },
 ];
 
 const gruposRegionais = [
@@ -131,20 +128,32 @@ const Pagina11 = () => {
             Recursos exclusivos para membros
           </p>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-4">
             {recursos.map((recurso, index) => (
               <div
                 key={index}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer"
+                className="group bg-white/10 backdrop-blur-lg rounded-3xl p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">{recurso.emoji}</span>
+                {/* Image container */}
+                <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
+                  {recurso.image ? (
+                    <img 
+                      src={recurso.image} 
+                      alt={recurso.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center p-4">
+                      <span className="text-4xl opacity-50">🖼️</span>
+                      <p className="text-white/30 text-xs mt-2">Imagem</p>
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-white font-semibold text-center text-sm mb-1">{recurso.title}</h3>
-                <p className="text-white/60 text-xs text-center">{recurso.description}</p>
-                <button className="w-full mt-3 py-2 bg-white/10 rounded-xl text-white/80 text-xs hover:bg-white/20 transition-colors">
-                  Acessar Material
-                </button>
+                
+                {/* Title */}
+                <h3 className="text-white font-semibold text-center text-sm group-hover:text-amber-400 transition-colors">
+                  {recurso.title}
+                </h3>
               </div>
             ))}
           </div>
