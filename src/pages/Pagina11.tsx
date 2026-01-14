@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo } from "react";
 // Fotos femininas (para usuários masculinos)
 import profileAna1 from "@/assets/profile-ana.png";
 import profileAna2 from "@/assets/profile-ana-2.png";
@@ -34,15 +34,24 @@ const recursos = [
   { image: cardGrupos, title: "Grupos Regionais", description: "Conecte-se com pessoas próximas" },
 ];
 
+// Mapeamento de estados para siglas
+const estadosSiglas: Record<string, string> = {
+  "Acre": "AC", "Alagoas": "AL", "Amapá": "AP", "Amazonas": "AM", "Bahia": "BA",
+  "Ceará": "CE", "Distrito Federal": "DF", "Espírito Santo": "ES", "Goiás": "GO",
+  "Maranhão": "MA", "Mato Grosso": "MT", "Mato Grosso do Sul": "MS", "Minas Gerais": "MG",
+  "Pará": "PA", "Paraíba": "PB", "Paraná": "PR", "Pernambuco": "PE", "Piauí": "PI",
+  "Rio de Janeiro": "RJ", "Rio Grande do Norte": "RN", "Rio Grande do Sul": "RS",
+  "Rondônia": "RO", "Roraima": "RR", "Santa Catarina": "SC", "São Paulo": "SP",
+  "Sergipe": "SE", "Tocantins": "TO"
+};
+
 const Pagina11 = () => {
   const navigate = useNavigate();
-  const [userGender, setUserGender] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Recupera o gênero do localStorage
-    const gender = localStorage.getItem("userGender");
-    setUserGender(gender);
-  }, []);
+  
+  // Inicializa diretamente do localStorage para evitar delay
+  const userGender = localStorage.getItem("userGender");
+  const userState = localStorage.getItem("userState") || "Bahia";
+  const stateSigla = estadosSiglas[userState] || "BA";
 
   // Seleciona aleatoriamente uma foto e nome para o perfil desbloqueado
   const randomIndex = useMemo(() => Math.floor(Math.random() * 4), []);
@@ -54,20 +63,20 @@ const Pagina11 = () => {
     
     if (showMale) {
       return [
-        { name: maleNames[randomIndex], age: 22 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: malePhotos[randomIndex], community: "Comunidade Música" },
-        { name: "Felipe", age: 25, distance: "2.2 km", state: "BA", locked: true, photo: profileMaleLocked1 },
-        { name: "Thiago", age: 23, distance: "6.4 km", state: "BA", locked: true, photo: profileMaleLocked2 },
-        { name: "Bruno", age: 26, distance: "7.9 km", state: "BA", locked: true, photo: profileMaleLocked3 },
+        { name: maleNames[randomIndex], age: 22 + randomIndex, distance: "4.7 km", state: stateSigla, locked: false, photo: malePhotos[randomIndex], community: "Comunidade Música" },
+        { name: "Felipe", age: 25, distance: "2.2 km", state: stateSigla, locked: true, photo: profileMaleLocked1 },
+        { name: "Thiago", age: 23, distance: "6.4 km", state: stateSigla, locked: true, photo: profileMaleLocked2 },
+        { name: "Bruno", age: 26, distance: "7.9 km", state: stateSigla, locked: true, photo: profileMaleLocked3 },
       ];
     } else {
       return [
-        { name: femaleNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: "BA", locked: false, photo: femalePhotos[randomIndex], community: "Comunidade Música" },
-        { name: "Amanda", age: 23, distance: "2.2 km", state: "BA", locked: true, photo: profileAmanda },
-        { name: "Isabela", age: 21, distance: "6.4 km", state: "BA", locked: true, photo: profileIsabela },
-        { name: "Carolina", age: 23, distance: "7.9 km", state: "BA", locked: true, photo: profileCarolina },
+        { name: femaleNames[randomIndex], age: 20 + randomIndex, distance: "4.7 km", state: stateSigla, locked: false, photo: femalePhotos[randomIndex], community: "Comunidade Música" },
+        { name: "Amanda", age: 23, distance: "2.2 km", state: stateSigla, locked: true, photo: profileAmanda },
+        { name: "Isabela", age: 21, distance: "6.4 km", state: stateSigla, locked: true, photo: profileIsabela },
+        { name: "Carolina", age: 23, distance: "7.9 km", state: stateSigla, locked: true, photo: profileCarolina },
       ];
     }
-  }, [randomIndex, userGender]);
+  }, [randomIndex, userGender, stateSigla]);
 
   return (
     <div className="min-h-screen gradient-welcome relative overflow-hidden">
