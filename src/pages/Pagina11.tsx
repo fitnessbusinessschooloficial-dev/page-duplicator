@@ -47,57 +47,57 @@ const Pagina11 = () => {
           </div>
         </div>
 
-        {/* Profiles grid - more compact */}
-        <div className="grid grid-cols-2 gap-2 mb-3">
+        {/* Profiles grid - compact for above fold */}
+        <div className="grid grid-cols-2 gap-2 mb-2">
           {profiles.map((profile, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-lg rounded-xl p-2 border border-white/20 relative overflow-hidden"
+              className="bg-white/10 backdrop-blur-lg rounded-lg p-1.5 border border-white/20 relative overflow-hidden"
             >
-              {/* Profile avatar - smaller */}
-              <div className="w-full aspect-[4/3] rounded-lg bg-white/20 mb-2 flex items-center justify-center">
+              {/* Profile avatar - compact */}
+              <div className="w-full aspect-[5/4] rounded-md bg-white/20 mb-1 flex items-center justify-center">
                 {profile.locked ? (
-                  <div className="text-center">
-                    <span className="text-2xl">🔒</span>
-                    <p className="text-white/60 text-[10px]">Bloqueado</p>
-                  </div>
+                  <span className="text-xl">🔒</span>
                 ) : (
-                  <span className="text-3xl">{profile.avatar}</span>
+                  <span className="text-2xl">{profile.avatar}</span>
                 )}
               </div>
               
-              {/* Profile info - compact */}
+              {/* Profile info - minimal */}
               <div className="text-center">
-                <p className="text-white font-semibold text-sm">{profile.name}, {profile.age}</p>
-                <p className="text-white/60 text-xs">{profile.state} • {profile.distance}</p>
+                <p className="text-white font-medium text-xs">{profile.name}, {profile.age}</p>
+                <p className="text-white/60 text-[10px]">{profile.state} • {profile.distance}</p>
               </div>
 
               {/* Locked overlay */}
               {profile.locked && (
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                  <p className="text-amber-400 text-xs font-medium">Assine para ver</p>
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                  <p className="text-amber-400 text-[10px] font-medium">Assine para ver</p>
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Unlock message - compact */}
-        <div className="bg-amber-400/20 rounded-xl p-2 mb-3 border border-amber-400/30">
-          <p className="text-amber-400 text-center text-xs">
+        {/* Unlock message - minimal */}
+        <div className="bg-amber-400/20 rounded-lg p-1.5 mb-2 border border-amber-400/30 hidden md:block">
+          <p className="text-amber-400 text-center text-[10px]">
             <span className="mr-1">🔓</span>
             3 perfis bloqueados. Desbloqueie e conecte-se
           </p>
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button - desktop */}
         <button
           onClick={() => navigate("/pagina12")}
-          className="w-full gradient-button text-white py-3 px-6 rounded-xl text-base font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 mb-6"
+          className="hidden md:flex w-full gradient-button text-white py-2.5 px-4 rounded-lg text-sm font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 items-center justify-center gap-2 mb-6"
         >
           Desbloquear Perfis
-          <span className="text-xl">→</span>
+          <span className="text-lg">→</span>
         </button>
+
+        {/* Spacer for mobile floating button */}
+        <div className="h-16 md:hidden"></div>
 
         {/* O Que Você Encontra Section */}
         <div className="mb-10">
@@ -138,6 +138,17 @@ const Pagina11 = () => {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Floating CTA Button - mobile only */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-50">
+        <button
+          onClick={() => navigate("/pagina12")}
+          className="w-full gradient-button text-white py-3 px-6 rounded-xl text-base font-semibold shadow-2xl flex items-center justify-center gap-2"
+        >
+          Desbloquear Perfis
+          <span className="text-lg">→</span>
+        </button>
       </div>
     </div>
   );
