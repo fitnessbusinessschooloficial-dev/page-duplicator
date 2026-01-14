@@ -162,40 +162,55 @@ const QuizFlow = () => {
   if (step === 1) {
     return (
       <QuizLayout>
+        {/* Logo with glow effect */}
         <div className="flex justify-center mb-8">
-          <div className="w-24 h-24 rounded-full shadow-2xl overflow-hidden">
+          <div className="w-28 h-28 rounded-full shadow-glow-gold overflow-hidden border-2 border-gold-400/30">
             <img src={heartLogo} alt="Coração" className="w-full h-full object-cover" />
           </div>
         </div>
-        <h1 className="text-4xl font-bold text-center mb-4">
-          <span className="text-white">Encontro</span>{' '}
-          <span className="text-amber-400">com Fé</span>
+
+        {/* Title with gradient text */}
+        <h1 className="text-4xl font-bold text-center mb-3">
+          <span className="text-cream-100">Encontro</span>{' '}
+          <span className="text-gradient">com Fé</span>
         </h1>
-        <p className="text-center text-white/90 text-xl mb-8 font-light">
+        <p className="text-center text-cream-200/80 text-xl mb-10 font-light tracking-wide">
           Conexões que transformam vidas
         </p>
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 mb-8 border border-white/20">
+
+        {/* Stats card with glass effect */}
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 mb-8 border border-white/10 hover:border-gold-400/30 transition-colors">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/80 text-sm mb-1">Pessoas na sua região</p>
-              <p className="text-white text-3xl font-bold">5.000+</p>
+              <p className="text-cream-200/70 text-sm mb-1">Pessoas na sua região</p>
+              <p className="text-cream-100 text-4xl font-bold">5.000<span className="text-gold-400">+</span></p>
             </div>
-            <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold-400/20 to-rose-400/10 flex items-center justify-center border border-white/10">
               <span className="text-3xl">🏙️</span>
             </div>
           </div>
         </div>
+
+        {/* CTA Button */}
         <button 
           onClick={goNext}
-          className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2"
+          className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-glow-gold hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3"
         >
           Iniciar Agora
-          <span className="text-2xl">→</span>
+          <span className="text-xl">→</span>
         </button>
-        <div className="mt-8 flex justify-center gap-6 text-white/60 text-sm">
-          <div className="flex items-center gap-1"><span>🛡️</span><span>Seguro</span></div>
-          <div className="flex items-center gap-1"><span>🔒</span><span>Privado</span></div>
-          <div className="flex items-center gap-1"><span>✅</span><span>Verificado</span></div>
+
+        {/* Trust badges */}
+        <div className="mt-10 flex justify-center gap-8 text-cream-200/50 text-sm">
+          <div className="flex items-center gap-2 hover:text-gold-400 transition-colors">
+            <span>🛡️</span><span>Seguro</span>
+          </div>
+          <div className="flex items-center gap-2 hover:text-gold-400 transition-colors">
+            <span>🔒</span><span>Privado</span>
+          </div>
+          <div className="flex items-center gap-2 hover:text-gold-400 transition-colors">
+            <span>✅</span><span>Verificado</span>
+          </div>
         </div>
       </QuizLayout>
     );
@@ -206,12 +221,12 @@ const QuizFlow = () => {
     return (
       <QuizLayout showBackButton onBack={goBack}>
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">💑</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">💑</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-3">Qual é o seu gênero?</h1>
-        <p className="text-center text-white/70 mb-8">Responda algumas perguntas para encontrar pessoas compatíveis com você</p>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-3">Qual é o seu gênero?</h1>
+        <p className="text-center text-cream-200/60 mb-8">Responda algumas perguntas para encontrar pessoas compatíveis com você</p>
         <div className="space-y-4">
           <QuizOption emoji="👨" label="Masculino" onClick={() => { setGender("masculino"); goNext(); }} />
           <QuizOption emoji="👩" label="Feminino" onClick={() => { setGender("feminino"); goNext(); }} />
@@ -233,11 +248,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={1} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">🎂</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">🎂</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Qual é a sua idade?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Qual é a sua idade?</h1>
         <div className="space-y-3">
           {ageRanges.map((range) => (
             <QuizOption key={range.value} emoji={range.emoji} label={range.label} onClick={() => { setAgeRange(range.value); goNext(); }} />
@@ -253,38 +268,38 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={2} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">📍</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">📍</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Em qual estado você mora?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Em qual estado você mora?</h1>
         <div className="mb-6">
           <select
             value={selectedState}
             onChange={(e) => setSelectedState(e.target.value)}
-            className="w-full bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 text-white text-lg appearance-none cursor-pointer focus:outline-none focus:border-amber-400/50"
+            className="w-full bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 text-cream-100 text-lg appearance-none cursor-pointer focus:outline-none focus:border-gold-400/50 transition-colors hover:border-gold-400/30"
             style={{ 
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23d4a853'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'right 1rem center',
               backgroundSize: '1.5rem'
             }}
           >
-            <option value="" disabled className="bg-gray-800 text-white">Selecione seu estado</option>
+            <option value="" disabled className="bg-navy-600 text-cream-100">Selecione seu estado</option>
             {estados.map((estado) => (
-              <option key={estado} value={estado} className="bg-gray-800 text-white">{estado}</option>
+              <option key={estado} value={estado} className="bg-navy-600 text-cream-100">{estado}</option>
             ))}
           </select>
         </div>
         <button
           onClick={goNext}
           disabled={!selectedState}
-          className={`w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl transition-all duration-200 flex items-center justify-center gap-2 ${
-            selectedState ? 'hover:scale-105' : 'opacity-50 cursor-not-allowed'
+          className={`w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-glow-gold transition-all duration-300 flex items-center justify-center gap-2 ${
+            selectedState ? 'hover:scale-[1.02]' : 'opacity-50 cursor-not-allowed'
           }`}
         >
           Continuar
-          <span className="text-2xl">→</span>
+          <span className="text-xl">→</span>
         </button>
       </QuizLayout>
     );
@@ -302,11 +317,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={3} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">🙏</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">🙏</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Qual é a sua denominação religiosa?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Qual é a sua denominação religiosa?</h1>
         <div className="space-y-3">
           {denominations.map((denom) => (
             <QuizOption key={denom.label} emoji={denom.emoji} label={denom.label} onClick={goNext} />
@@ -328,11 +343,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={4} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">⛪</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">⛪</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Você frequenta igreja regularmente?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Você frequenta igreja regularmente?</h1>
         <div className="space-y-3">
           {frequencies.map((freq) => (
             <QuizOption key={freq.label} emoji={freq.emoji} label={freq.label} onClick={goNext} />
@@ -354,11 +369,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={5} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">💖</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">💖</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">O que você busca?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">O que você busca?</h1>
         <div className="space-y-3">
           {goals.map((goal) => (
             <QuizOption key={goal.label} emoji={goal.emoji} label={goal.label} onClick={goNext} />
@@ -380,11 +395,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={6} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">🕊️</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">🕊️</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Qual a importância da fé para você?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Qual a importância da fé para você?</h1>
         <div className="space-y-3">
           {importances.map((imp) => (
             <QuizOption key={imp.label} emoji={imp.emoji} label={imp.label} onClick={goNext} />
@@ -406,11 +421,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={7} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">🙏</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">🙏</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Você gostaria de orar junto com seu parceiro(a)?</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Você gostaria de orar junto com seu parceiro(a)?</h1>
         <div className="space-y-3">
           {frequencies.map((freq) => (
             <QuizOption key={freq.label} emoji={freq.emoji} label={freq.label} onClick={goNext} />
@@ -432,11 +447,11 @@ const QuizFlow = () => {
       <QuizLayout showBackButton onBack={goBack}>
         <QuizProgress current={8} total={8} />
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-            <span className="text-3xl">👪</span>
+          <div className="w-18 h-18 rounded-full gradient-button flex items-center justify-center shadow-glow-gold p-4">
+            <span className="text-4xl">👪</span>
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Sobre ter filhos:</h1>
+        <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Sobre ter filhos:</h1>
         <div className="space-y-3">
           {options.map((opt) => (
             <QuizOption key={opt.label} emoji={opt.emoji} label={opt.label} onClick={goNext} />
@@ -468,77 +483,86 @@ const QuizFlow = () => {
     ];
 
     return (
-      <div className="min-h-screen gradient-welcome relative overflow-hidden">
+      <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute w-64 h-64 bg-teal-400/20 rounded-full blur-3xl animate-pulse" style={{ top: '10%', left: '10%' }} />
-          <div className="absolute w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-pulse" style={{ top: '50%', right: '10%', animationDelay: '1s' }} />
-          <div className="absolute w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ bottom: '10%', left: '20%', animationDelay: '2s' }} />
+          <div className="absolute w-72 h-72 bg-gold-400/15 rounded-full blur-3xl animate-pulse-glow" style={{ top: '10%', left: '5%' }} />
+          <div className="absolute w-96 h-96 bg-rose-400/10 rounded-full blur-3xl animate-pulse-glow" style={{ top: '50%', right: '5%', animationDelay: '1s' }} />
+          <div className="absolute w-80 h-80 bg-gold-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ bottom: '10%', left: '15%', animationDelay: '2s' }} />
         </div>
 
         <div className="relative z-10 px-4 py-4 max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <button onClick={goBack} className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors flex-shrink-0">
+          <div className="flex items-center gap-3 mb-4">
+            <button onClick={goBack} className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-cream-100 hover:bg-white/10 hover:border-gold-400/30 transition-all flex-shrink-0">
               <span className="text-lg">←</span>
             </button>
-            <div className="w-12 h-12 rounded-full gradient-button flex items-center justify-center shadow-xl flex-shrink-0">
+            <div className="w-12 h-12 rounded-full gradient-button flex items-center justify-center shadow-glow-gold flex-shrink-0">
               <span className="text-2xl">💕</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Encontramos <span className="text-amber-400">4 conexões</span></h1>
-              <p className="text-white/70 text-xs">Pessoas da sua região com valores similares</p>
+              <h1 className="text-xl font-bold text-cream-100">Encontramos <span className="text-gradient">4 conexões</span></h1>
+              <p className="text-cream-200/60 text-xs">Pessoas da sua região com valores similares</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="grid grid-cols-2 gap-3 mb-3">
             {profiles.map((profile, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-lg rounded-lg p-1.5 border border-white/20 relative overflow-hidden">
-                <div className="w-full aspect-[5/4] rounded-md overflow-hidden mb-1 relative">
+              <div key={index} className="bg-white/5 backdrop-blur-xl rounded-2xl p-2 border border-white/10 relative overflow-hidden hover:border-gold-400/30 transition-colors group">
+                <div className="w-full aspect-[5/4] rounded-xl overflow-hidden mb-2 relative">
                   <img src={profile.photo} alt={profile.name} className={`w-full h-full object-cover ${profile.locked ? 'blur-md' : ''}`} />
+                  {!profile.locked && (
+                    <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 flex items-center gap-1">
+                      <span className="text-xs">✨</span>
+                      <span className="text-cream-100 text-xs font-medium">Compatível</span>
+                    </div>
+                  )}
                 </div>
                 <div className="text-center">
-                  <p className="text-white font-medium text-xs">{profile.name}, {profile.age}</p>
-                  <p className="text-white/60 text-[10px]">{profile.state} • {profile.distance}</p>
+                  <p className="text-cream-100 font-semibold text-sm">{profile.name}, {profile.age}</p>
+                  <p className="text-cream-200/50 text-xs">{profile.state} • {profile.distance}</p>
                 </div>
                 {profile.locked && (
-                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <p className="text-amber-400 text-[10px] font-medium">Assine para ver</p>
+                  <div className="absolute inset-0 bg-navy-600/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                    <div className="text-center">
+                      <span className="text-2xl mb-1 block">🔒</span>
+                      <p className="text-gold-400 text-xs font-medium">Assine para ver</p>
+                    </div>
                   </div>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="bg-amber-400/20 rounded-lg p-1.5 mb-2 border border-amber-400/30 hidden md:block">
-            <p className="text-amber-400 text-center text-[10px]">
-              <span className="mr-1">🔓</span>3 perfis bloqueados. Desbloqueie e conecte-se
+          <div className="bg-gradient-to-r from-gold-400/20 to-rose-400/20 rounded-2xl p-3 mb-3 border border-gold-400/30 hidden md:block">
+            <p className="text-gold-400 text-center text-sm font-medium">
+              <span className="mr-2">🔓</span>3 perfis bloqueados. Desbloqueie e conecte-se
             </p>
           </div>
 
-          <button onClick={goNext} className="hidden md:flex w-full gradient-button text-white py-2.5 px-4 rounded-lg text-sm font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 items-center justify-center gap-2 mb-6">
+          <button onClick={goNext} className="hidden md:flex w-full gradient-button text-white py-3 px-4 rounded-2xl text-base font-semibold shadow-glow-gold hover:scale-[1.02] transition-all duration-300 items-center justify-center gap-2 mb-8">
             Desbloquear Perfis<span className="text-lg">→</span>
           </button>
 
-          <div className="h-16 md:hidden"></div>
+          <div className="h-20 md:hidden"></div>
 
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold text-center text-white mb-2">O Que Você Encontra</h2>
-            <p className="text-center text-white/70 mb-6">Recursos exclusivos para membros</p>
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">O Que Você Encontra</h2>
+            <p className="text-center text-cream-200/60 mb-6">Recursos exclusivos para membros</p>
             <div className="grid grid-cols-3 gap-4">
               {recursos.map((recurso, index) => (
-                <div key={index} className="group bg-white/10 backdrop-blur-lg rounded-3xl p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                  <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
+                <div key={index} className="group bg-white/5 backdrop-blur-xl rounded-3xl p-5 border border-white/10 hover:bg-white/10 hover:border-gold-400/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                  <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-gold-400/10 to-rose-400/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-gold-400/30 transition-colors">
                     <img src={recurso.image} alt={recurso.title} className="w-full h-full object-cover" />
                   </div>
-                  <h3 className="text-white font-semibold text-center text-sm group-hover:text-amber-400 transition-colors mb-1">{recurso.title}</h3>
-                  <p className="text-white/60 text-center text-xs">{recurso.description}</p>
+                  <h3 className="text-cream-100 font-semibold text-center text-sm group-hover:text-gold-400 transition-colors mb-1">{recurso.title}</h3>
+                  <p className="text-cream-200/50 text-center text-xs">{recurso.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent z-50">
-          <button onClick={goNext} className="w-full gradient-button text-white py-3 px-6 rounded-xl text-base font-semibold shadow-2xl flex items-center justify-center gap-2">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background/95 to-transparent z-50">
+          <button onClick={goNext} className="w-full gradient-button text-white py-3.5 px-6 rounded-2xl text-base font-semibold shadow-glow-gold flex items-center justify-center gap-2">
             Desbloquear Perfis<span className="text-lg">→</span>
           </button>
         </div>
@@ -548,30 +572,30 @@ const QuizFlow = () => {
 
   // Step 12: Plans
   return (
-    <div className="min-h-screen gradient-welcome relative overflow-hidden">
+    <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-64 h-64 bg-teal-400/20 rounded-full blur-3xl animate-pulse" style={{ top: '10%', left: '10%' }} />
-        <div className="absolute w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-pulse" style={{ top: '50%', right: '10%', animationDelay: '1s' }} />
-        <div className="absolute w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ bottom: '10%', left: '20%', animationDelay: '2s' }} />
+        <div className="absolute w-72 h-72 bg-gold-400/15 rounded-full blur-3xl animate-pulse-glow" style={{ top: '10%', left: '5%' }} />
+        <div className="absolute w-96 h-96 bg-rose-400/10 rounded-full blur-3xl animate-pulse-glow" style={{ top: '50%', right: '5%', animationDelay: '1s' }} />
+        <div className="absolute w-80 h-80 bg-gold-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ bottom: '10%', left: '15%', animationDelay: '2s' }} />
       </div>
 
       <div className="relative z-10 px-4 py-8 max-w-4xl mx-auto">
-        <button onClick={goBack} className="mb-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+        <button onClick={goBack} className="mb-6 w-11 h-11 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-cream-100 hover:bg-white/10 hover:border-gold-400/30 transition-all">
           <span className="text-xl">←</span>
         </button>
 
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="w-10 h-10 rounded-full overflow-hidden">
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold-400/30 shadow-glow-gold">
             <img src={heartLogo} alt="Logo" className="w-full h-full object-cover" />
           </div>
-          <span className="text-white text-xl font-bold">Encontro <span className="text-amber-400">com Fé</span></span>
+          <span className="text-cream-100 text-2xl font-bold">Encontro <span className="text-gradient">com Fé</span></span>
         </div>
 
         {/* Video Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-center text-white mb-2">Veja Como Funciona</h2>
-          <p className="text-center text-white/70 mb-6">Conheça nossa plataforma e histórias de sucesso</p>
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">Veja Como Funciona</h2>
+          <p className="text-center text-cream-200/60 mb-6">Conheça nossa plataforma e histórias de sucesso</p>
+          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-glow-gold border border-gold-400/30">
             <iframe
               src="https://www.youtube.com/embed/QTvgTq9cq8E"
               title="Como Funciona - Encontro com Fé"
@@ -582,63 +606,63 @@ const QuizFlow = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-center text-white mb-8">ESCOLHA SEU PLANO</h2>
-        <p className="text-center text-white/70 mb-8">Acesso completo à plataforma</p>
+        <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">ESCOLHA SEU PLANO</h2>
+        <p className="text-center text-cream-200/60 mb-8">Acesso completo à plataforma</p>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
+        <div className="grid md:grid-cols-3 gap-4 mb-10">
           {plans.map((plan, index) => (
-            <div key={index} className={`bg-white/10 backdrop-blur-lg rounded-3xl p-6 border ${plan.popular ? 'border-amber-400 ring-2 ring-amber-400/50' : 'border-white/20'} relative`}>
+            <div key={index} className={`bg-white/5 backdrop-blur-xl rounded-3xl p-6 border ${plan.popular ? 'border-gold-400 ring-2 ring-gold-400/30 shadow-glow-gold' : 'border-white/10 hover:border-gold-400/30'} relative transition-all duration-300 hover:scale-[1.02]`}>
               {plan.savings && (
-                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold ${plan.popular ? 'bg-amber-400 text-black' : 'bg-teal-500 text-white'}`}>
+                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold ${plan.popular ? 'gradient-button text-white' : 'bg-rose-500 text-white'}`}>
                   {plan.savings}
                 </div>
               )}
-              <div className="flex justify-center mb-3 mt-2"><span className="text-4xl">{plan.emoji}</span></div>
-              <h3 className="text-white font-bold text-center mb-2">{plan.name}</h3>
-              <p className="text-3xl font-bold text-center text-white mb-1">{plan.price}</p>
-              <p className="text-white/60 text-sm text-center mb-4">{plan.period}</p>
-              <ul className="space-y-2 mb-6">
+              <div className="flex justify-center mb-4 mt-2"><span className="text-5xl">{plan.emoji}</span></div>
+              <h3 className="text-cream-100 font-bold text-center mb-2">{plan.name}</h3>
+              <p className="text-4xl font-bold text-center text-cream-100 mb-1">{plan.price}</p>
+              <p className="text-cream-200/50 text-sm text-center mb-5">{plan.period}</p>
+              <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-white/80 text-sm">
-                    <span className="text-teal-400">✓</span>{feature}
+                  <li key={i} className="flex items-center gap-3 text-cream-200/80 text-sm">
+                    <span className="text-gold-400">✓</span>{feature}
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-3 rounded-xl font-semibold transition-all duration-200 ${plan.popular ? 'gradient-button text-white hover:scale-105' : 'bg-white/20 text-white hover:bg-white/30'}`}>
+              <button className={`w-full py-3.5 rounded-2xl font-semibold transition-all duration-300 ${plan.popular ? 'gradient-button text-white hover:scale-[1.02] shadow-glow-gold' : 'bg-white/10 text-cream-100 hover:bg-white/15 hover:border-gold-400/30 border border-white/10'}`}>
                 Assinar Agora
               </button>
             </div>
           ))}
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 mb-8 border border-white/20">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl flex-shrink-0">🛡️</span>
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-5 mb-10 border border-white/10 hover:border-gold-400/30 transition-colors">
+          <div className="flex items-start gap-4">
+            <span className="text-3xl flex-shrink-0">🛡️</span>
             <div>
-              <p className="text-white font-semibold mb-1">GARANTIA LEGAL</p>
-              <p className="text-white/70 text-sm">Conforme Código de Defesa do Consumidor, você tem o direito ao arrependimento em até 7 dias após a compra com reembolso integral.</p>
+              <p className="text-cream-100 font-semibold mb-1">GARANTIA LEGAL</p>
+              <p className="text-cream-200/60 text-sm">Conforme Código de Defesa do Consumidor, você tem o direito ao arrependimento em até 7 dias após a compra com reembolso integral.</p>
             </div>
           </div>
         </div>
 
-        <h3 className="text-xl font-bold text-center text-white mb-6">Nossa Comunidade</h3>
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        <h3 className="text-xl font-bold text-center text-cream-100 mb-6">Nossa Comunidade</h3>
+        <div className="grid grid-cols-4 gap-4 mb-10">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-2xl mb-1">{stat.emoji}</div>
-              <p className="text-2xl font-bold text-amber-400">{stat.value}</p>
-              <p className="text-white/60 text-sm">{stat.label}</p>
+            <div key={index} className="text-center bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 hover:border-gold-400/30 transition-colors">
+              <div className="text-2xl mb-2">{stat.emoji}</div>
+              <p className="text-2xl font-bold text-gold-400">{stat.value}</p>
+              <p className="text-cream-200/50 text-sm">{stat.label}</p>
             </div>
           ))}
         </div>
 
-        <div className="text-center text-white/50 text-xs space-y-2">
+        <div className="text-center text-cream-200/40 text-xs space-y-3">
           <p>Serviço Digital: Nosso produto é um serviço digital que conecta comunidades oferecendo grupos segmentados por estado, região e apresentação geral.</p>
           <p>Política de Reembolso: Reembolsos podem ser solicitados para suporte@encontrocomfe.com.br</p>
-          <div className="flex justify-center gap-4 mt-4">
-            <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
+          <div className="flex justify-center gap-6 mt-5">
+            <a href="#" className="hover:text-gold-400 transition-colors">Termos de Uso</a>
             <span>•</span>
-            <a href="#" className="hover:text-white transition-colors">Política de Reembolso</a>
+            <a href="#" className="hover:text-gold-400 transition-colors">Política de Reembolso</a>
           </div>
         </div>
       </div>
