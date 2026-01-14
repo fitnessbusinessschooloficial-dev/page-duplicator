@@ -25,91 +25,78 @@ const Pagina11 = () => {
         <div className="absolute w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ bottom: '10%', left: '20%', animationDelay: '2s' }} />
       </div>
 
-      <div className="relative z-10 px-4 py-8 max-w-4xl mx-auto">
-        {/* Back button */}
-        <button
-          onClick={() => navigate("/pagina10")}
-          className="mb-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-        >
-          <span className="text-xl">←</span>
-        </button>
-
-        {/* Success icon */}
-        <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 rounded-full gradient-button flex items-center justify-center shadow-2xl">
-            <span className="text-4xl">💕</span>
+      <div className="relative z-10 px-4 py-4 max-w-4xl mx-auto">
+        {/* Header row - back button + icon + title inline */}
+        <div className="flex items-center gap-3 mb-3">
+          <button
+            onClick={() => navigate("/pagina10")}
+            className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors flex-shrink-0"
+          >
+            <span className="text-lg">←</span>
+          </button>
+          <div className="w-12 h-12 rounded-full gradient-button flex items-center justify-center shadow-xl flex-shrink-0">
+            <span className="text-2xl">💕</span>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">
+              Encontramos <span className="text-amber-400">4 conexões</span>
+            </h1>
+            <p className="text-white/70 text-xs">
+              Pessoas da sua região com valores similares
+            </p>
           </div>
         </div>
 
-        {/* Title */}
-        <h1 className="text-3xl font-bold text-center text-white mb-2">
-          Encontramos <span className="text-amber-400">4 conexões</span>
-        </h1>
-        <p className="text-center text-white/70 mb-6">
-          Pessoas da sua região com valores similares aos seus
-        </p>
-
-        {/* Profiles grid */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        {/* Profiles grid - more compact */}
+        <div className="grid grid-cols-2 gap-2 mb-3">
           {profiles.map((profile, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 border border-white/20 relative overflow-hidden"
+              className="bg-white/10 backdrop-blur-lg rounded-xl p-2 border border-white/20 relative overflow-hidden"
             >
-              {/* Profile avatar */}
-              <div className="w-full aspect-square rounded-xl bg-white/20 mb-3 flex items-center justify-center">
+              {/* Profile avatar - smaller */}
+              <div className="w-full aspect-[4/3] rounded-lg bg-white/20 mb-2 flex items-center justify-center">
                 {profile.locked ? (
                   <div className="text-center">
-                    <span className="text-4xl">🔒</span>
-                    <p className="text-white/60 text-xs mt-1">Perfil Bloqueado</p>
+                    <span className="text-2xl">🔒</span>
+                    <p className="text-white/60 text-[10px]">Bloqueado</p>
                   </div>
                 ) : (
-                  <span className="text-5xl">{profile.avatar}</span>
+                  <span className="text-3xl">{profile.avatar}</span>
                 )}
               </div>
               
-              {/* Profile info */}
+              {/* Profile info - compact */}
               <div className="text-center">
-                <p className="text-white font-semibold">{profile.name}, {profile.age}</p>
-                <p className="text-white/60 text-sm">{profile.state} • {profile.distance}</p>
-                {profile.community && (
-                  <p className="text-amber-400 text-xs mt-1">{profile.community}</p>
-                )}
+                <p className="text-white font-semibold text-sm">{profile.name}, {profile.age}</p>
+                <p className="text-white/60 text-xs">{profile.state} • {profile.distance}</p>
               </div>
 
               {/* Locked overlay */}
               {profile.locked && (
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <p className="text-amber-400 text-sm font-medium">Assine para ver</p>
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <p className="text-amber-400 text-xs font-medium">Assine para ver</p>
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Unlock message */}
-        <div className="bg-amber-400/20 rounded-2xl p-4 mb-6 border border-amber-400/30">
-          <p className="text-amber-400 text-center text-sm">
-            <span className="mr-2">🔓</span>
-            3 perfis bloqueados. Desbloqueie e comece a se conectar
-          </p>
-        </div>
-
-        {/* Milhares de pessoas */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 mb-8 border border-white/20 text-center">
-          <p className="text-white font-semibold">
-            <span className="mr-2">👥</span>
-            Milhares de pessoas esperando por você
+        {/* Unlock message - compact */}
+        <div className="bg-amber-400/20 rounded-xl p-2 mb-3 border border-amber-400/30">
+          <p className="text-amber-400 text-center text-xs">
+            <span className="mr-1">🔓</span>
+            3 perfis bloqueados. Desbloqueie e conecte-se
           </p>
         </div>
 
         {/* CTA Button */}
         <button
           onClick={() => navigate("/pagina12")}
-          className="w-full gradient-button text-white py-4 px-8 rounded-2xl text-lg font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 mb-10"
+          className="w-full gradient-button text-white py-3 px-6 rounded-xl text-base font-semibold shadow-2xl hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 mb-6"
         >
           Desbloquear Perfis
-          <span className="text-2xl">→</span>
+          <span className="text-xl">→</span>
         </button>
 
         {/* O Que Você Encontra Section */}
