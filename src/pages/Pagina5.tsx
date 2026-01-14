@@ -12,15 +12,22 @@ const Pagina5 = () => {
   };
 
   const denominations = [
-    { icon: "ri-cross-line", label: "Evangélica" },
-    { icon: "ri-cross-2-line", label: "Católica" },
-    { icon: "ri-book-open-line", label: "Protestante" },
-    { icon: "ri-calendar-check-line", label: "Adventista" },
+    { emoji: "✝️", label: "Evangélica" },
+    { emoji: "⛪", label: "Católica" },
+    { emoji: "📖", label: "Protestante" },
+    { emoji: "🕊️", label: "Adventista" },
   ];
 
   return (
     <QuizLayout showBackButton onBack={() => navigate("/pagina4")}>
       <QuizProgress current={3} total={8} />
+
+      {/* Header icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
+          <span className="text-3xl">🙏</span>
+        </div>
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-white mb-8">
@@ -32,7 +39,7 @@ const Pagina5 = () => {
         {denominations.map((denom) => (
           <QuizOption
             key={denom.label}
-            icon={denom.icon}
+            emoji={denom.emoji}
             label={denom.label}
             onClick={() => handleSelect(denom.label)}
           />

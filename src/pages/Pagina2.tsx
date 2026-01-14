@@ -15,7 +15,7 @@ const Pagina2 = () => {
       {/* Icon */}
       <div className="flex justify-center mb-6">
         <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
-          <i className="ri-user-heart-line text-3xl text-white"></i>
+          <span className="text-3xl">💑</span>
         </div>
       </div>
 
@@ -32,12 +32,12 @@ const Pagina2 = () => {
       {/* Options */}
       <div className="space-y-4">
         <QuizOption
-          icon="ri-men-line"
+          emoji="👨"
           label="Masculino"
           onClick={() => handleSelect("masculino")}
         />
         <QuizOption
-          icon="ri-women-line"
+          emoji="👩"
           label="Feminino"
           onClick={() => handleSelect("feminino")}
         />

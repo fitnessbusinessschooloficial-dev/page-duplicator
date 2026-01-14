@@ -12,15 +12,22 @@ const Pagina9 = () => {
   };
 
   const frequencies = [
-    { icon: "ri-hand-heart-line", label: "Sempre" },
-    { icon: "ri-time-line", label: "Às vezes" },
-    { icon: "ri-history-line", label: "Raramente" },
-    { icon: "ri-close-circle-line", label: "Nunca" },
+    { emoji: "🙏", label: "Sempre" },
+    { emoji: "🕐", label: "Às vezes" },
+    { emoji: "🔄", label: "Raramente" },
+    { emoji: "❌", label: "Nunca" },
   ];
 
   return (
     <QuizLayout showBackButton onBack={() => navigate("/pagina8")}>
       <QuizProgress current={7} total={8} />
+
+      {/* Header icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
+          <span className="text-3xl">🙏</span>
+        </div>
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-white mb-8">
@@ -32,7 +39,7 @@ const Pagina9 = () => {
         {frequencies.map((freq) => (
           <QuizOption
             key={freq.label}
-            icon={freq.icon}
+            emoji={freq.emoji}
             label={freq.label}
             onClick={() => handleSelect(freq.label)}
           />

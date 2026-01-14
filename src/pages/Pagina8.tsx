@@ -12,15 +12,22 @@ const Pagina8 = () => {
   };
 
   const importances = [
-    { icon: "ri-star-fill", label: "Muito importante" },
-    { icon: "ri-star-line", label: "Importante" },
-    { icon: "ri-star-half-line", label: "Pouco importante" },
-    { icon: "ri-checkbox-blank-circle-line", label: "Indiferente" },
+    { emoji: "⭐", label: "Muito importante" },
+    { emoji: "✨", label: "Importante" },
+    { emoji: "💫", label: "Pouco importante" },
+    { emoji: "🤷", label: "Indiferente" },
   ];
 
   return (
     <QuizLayout showBackButton onBack={() => navigate("/pagina7")}>
       <QuizProgress current={6} total={8} />
+
+      {/* Header icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full gradient-button flex items-center justify-center shadow-xl">
+          <span className="text-3xl">🕊️</span>
+        </div>
+      </div>
 
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-white mb-8">
@@ -32,7 +39,7 @@ const Pagina8 = () => {
         {importances.map((imp) => (
           <QuizOption
             key={imp.label}
-            icon={imp.icon}
+            emoji={imp.emoji}
             label={imp.label}
             onClick={() => handleSelect(imp.label)}
           />
