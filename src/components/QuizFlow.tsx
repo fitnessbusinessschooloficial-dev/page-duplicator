@@ -637,14 +637,14 @@ const ResultsStep = memo(({ gender, ageRange, selectedState, randomIndex, goBack
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">O Que Você Encontra</h2>
           <p className="text-center text-cream-200/60 mb-6">Recursos exclusivos para membros</p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex flex-col gap-5 md:grid md:grid-cols-3 md:gap-4">
             {recursos.map((recurso, index) => (
-              <div key={index} className="group bg-white/5 backdrop-blur-xl rounded-3xl p-5 border border-white/10 hover:bg-white/10 hover:border-gold-400/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-gold-400/10 to-rose-400/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-gold-400/30 transition-colors">
-                  <img src={recurso.image} alt={recurso.title} className="w-full h-full object-cover" loading="lazy" />
+              <div key={index} className="group bg-white/5 backdrop-blur-xl rounded-3xl p-3 md:p-5 border border-white/10 hover:bg-white/10 hover:border-gold-400/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                <div className="w-full md:aspect-square rounded-2xl bg-gradient-to-br from-gold-400/10 to-rose-400/5 mb-3 md:mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-gold-400/30 transition-colors">
+                  <img src={recurso.image} alt={recurso.title} className="w-full h-auto object-contain" loading="lazy" />
                 </div>
-                <h3 className="text-cream-100 font-semibold text-center text-sm group-hover:text-gold-400 transition-colors mb-1">{recurso.title}</h3>
-                <p className="text-cream-200/50 text-center text-xs">{recurso.description}</p>
+                <h3 className="text-cream-100 font-semibold text-center text-lg md:text-sm group-hover:text-gold-400 transition-colors mb-1">{recurso.title}</h3>
+                <p className="text-cream-200/50 text-center text-base md:text-xs">{recurso.description}</p>
               </div>
             ))}
           </div>
