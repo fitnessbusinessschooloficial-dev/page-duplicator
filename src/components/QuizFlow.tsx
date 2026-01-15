@@ -1,61 +1,19 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo, lazy, Suspense, memo } from "react";
 import QuizLayout from "@/components/quiz/QuizLayout";
 import QuizOption from "@/components/quiz/QuizOption";
 import QuizProgress from "@/components/quiz/QuizProgress";
+import LazyImage from "@/components/quiz/LazyImage";
+import LazyYouTube from "@/components/quiz/LazyYouTube";
 import heartLogo from "@/assets/heart-logo.png";
 import { 
   Users, Heart, User, Cake, MapPin, Church, Cross, BookOpen, Bird, 
   CheckCircle, Clock, RefreshCw, XCircle, Gem, HeartHandshake, Search, 
   Handshake, Star, Sparkles, CircleDot, HelpCircle, Baby, UsersRound, Ban,
   Shield, Lock, ShieldCheck, Zap, Crown, Map, MessageCircle, Headphones,
-  ArrowRight, Check, Play, ChevronLeft, Unlock, UserCheck
+  ArrowRight, Check, ChevronLeft, Unlock
 } from "lucide-react";
 
-// Fotos masculinas por faixa etária
-import male1825_1 from "@/assets/male-18-25-1.png";
-import male1825_2 from "@/assets/male-18-25-2.png";
-import male1825_3 from "@/assets/male-18-25-3.png";
-import male1825_4 from "@/assets/male-18-25-4.png";
-import male2635_1 from "@/assets/male-26-35-1.png";
-import male2635_2 from "@/assets/male-26-35-2.png";
-import male2635_3 from "@/assets/male-26-35-3.png";
-import male2635_4 from "@/assets/male-26-35-4.png";
-import male3645_1 from "@/assets/male-36-45-1.png";
-import male3645_2 from "@/assets/male-36-45-2.png";
-import male3645_3 from "@/assets/male-36-45-3.png";
-import male3645_4 from "@/assets/male-36-45-4.png";
-import male4655_1 from "@/assets/male-46-55-1.png";
-import male4655_2 from "@/assets/male-46-55-2.png";
-import male4655_3 from "@/assets/male-46-55-3.png";
-import male4655_4 from "@/assets/male-46-55-4.png";
-import male56plus_1 from "@/assets/male-56-plus-1.png";
-import male56plus_2 from "@/assets/male-56-plus-2.png";
-import male56plus_3 from "@/assets/male-56-plus-3.png";
-import male56plus_4 from "@/assets/male-56-plus-4.png";
-
-// Fotos femininas por faixa etária
-import female1825_1 from "@/assets/female-18-25-1.png";
-import female1825_2 from "@/assets/female-18-25-2.png";
-import female1825_3 from "@/assets/female-18-25-3.png";
-import female1825_4 from "@/assets/female-18-25-4.png";
-import female2635_1 from "@/assets/female-26-35-1.png";
-import female2635_2 from "@/assets/female-26-35-2.png";
-import female2635_3 from "@/assets/female-26-35-3.png";
-import female2635_4 from "@/assets/female-26-35-4.png";
-import female3645_1 from "@/assets/female-36-45-1.png";
-import female3645_2 from "@/assets/female-36-45-2.png";
-import female3645_3 from "@/assets/female-36-45-3.png";
-import female3645_4 from "@/assets/female-36-45-4.png";
-import female4655_1 from "@/assets/female-46-55-1.png";
-import female4655_2 from "@/assets/female-46-55-2.png";
-import female4655_3 from "@/assets/female-46-55-3.png";
-import female4655_4 from "@/assets/female-46-55-4.png";
-import female56plus_1 from "@/assets/female-56-plus-1.png";
-import female56plus_2 from "@/assets/female-56-plus-2.png";
-import female56plus_3 from "@/assets/female-56-plus-3.png";
-import female56plus_4 from "@/assets/female-56-plus-4.png";
-
-// Cards de recursos
+// Cards de recursos - mantidos pois são usados na tela de resultados
 import cardEventos from "@/assets/card-eventos.png";
 import cardConteudos from "@/assets/card-conteudos.png";
 import cardGrupos from "@/assets/card-grupos.png";
@@ -79,20 +37,17 @@ const estadosSiglas: Record<string, string> = {
   "Sergipe": "SE", "Tocantins": "TO"
 };
 
-const malePhotosByAge: Record<string, string[]> = {
-  "18-25": [male1825_1, male1825_2, male1825_3, male1825_4],
-  "26-35": [male2635_1, male2635_2, male2635_3, male2635_4],
-  "36-45": [male3645_1, male3645_2, male3645_3, male3645_4],
-  "46-55": [male4655_1, male4655_2, male4655_3, male4655_4],
-  "56+": [male56plus_1, male56plus_2, male56plus_3, male56plus_4],
-};
-
-const femalePhotosByAge: Record<string, string[]> = {
-  "18-25": [female1825_1, female1825_2, female1825_3, female1825_4],
-  "26-35": [female2635_1, female2635_2, female2635_3, female2635_4],
-  "36-45": [female3645_1, female3645_2, female3645_3, female3645_4],
-  "46-55": [female4655_1, female4655_2, female4655_3, female4655_4],
-  "56+": [female56plus_1, female56plus_2, female56plus_3, female56plus_4],
+// Lazy load das fotos de perfil - só carrega quando necessário
+const getPhotoUrl = (gender: "male" | "female", ageRange: string, index: number) => {
+  const ageMap: Record<string, string> = {
+    "18-25": "18-25",
+    "26-35": "26-35", 
+    "36-45": "36-45",
+    "46-55": "46-55",
+    "56+": "56-plus"
+  };
+  const age = ageMap[ageRange] || "26-35";
+  return `/src/assets/${gender}-${age}-${index + 1}.png`;
 };
 
 const maleDataByAge: Record<string, { names: string[]; ageRange: [number, number] }> = {
@@ -155,6 +110,115 @@ const stats = [
 
 const getRandomAge = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+// Componente de background decorativo memoizado
+const DecorativeBackground = memo(() => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute w-72 h-72 bg-gold-400/15 rounded-full blur-3xl will-change-transform" style={{ top: '10%', left: '5%' }} />
+    <div className="absolute w-96 h-96 bg-rose-400/10 rounded-full blur-3xl will-change-transform" style={{ top: '50%', right: '5%' }} />
+    <div className="absolute w-80 h-80 bg-gold-500/10 rounded-full blur-3xl will-change-transform" style={{ bottom: '10%', left: '15%' }} />
+  </div>
+));
+DecorativeBackground.displayName = "DecorativeBackground";
+
+// Importações dinâmicas das fotos
+const photoImports = {
+  male: {
+    "18-25": () => Promise.all([
+      import("@/assets/male-18-25-1.png"),
+      import("@/assets/male-18-25-2.png"),
+      import("@/assets/male-18-25-3.png"),
+      import("@/assets/male-18-25-4.png"),
+    ]),
+    "26-35": () => Promise.all([
+      import("@/assets/male-26-35-1.png"),
+      import("@/assets/male-26-35-2.png"),
+      import("@/assets/male-26-35-3.png"),
+      import("@/assets/male-26-35-4.png"),
+    ]),
+    "36-45": () => Promise.all([
+      import("@/assets/male-36-45-1.png"),
+      import("@/assets/male-36-45-2.png"),
+      import("@/assets/male-36-45-3.png"),
+      import("@/assets/male-36-45-4.png"),
+    ]),
+    "46-55": () => Promise.all([
+      import("@/assets/male-46-55-1.png"),
+      import("@/assets/male-46-55-2.png"),
+      import("@/assets/male-46-55-3.png"),
+      import("@/assets/male-46-55-4.png"),
+    ]),
+    "56+": () => Promise.all([
+      import("@/assets/male-56-plus-1.png"),
+      import("@/assets/male-56-plus-2.png"),
+      import("@/assets/male-56-plus-3.png"),
+      import("@/assets/male-56-plus-4.png"),
+    ]),
+  },
+  female: {
+    "18-25": () => Promise.all([
+      import("@/assets/female-18-25-1.png"),
+      import("@/assets/female-18-25-2.png"),
+      import("@/assets/female-18-25-3.png"),
+      import("@/assets/female-18-25-4.png"),
+    ]),
+    "26-35": () => Promise.all([
+      import("@/assets/female-26-35-1.png"),
+      import("@/assets/female-26-35-2.png"),
+      import("@/assets/female-26-35-3.png"),
+      import("@/assets/female-26-35-4.png"),
+    ]),
+    "36-45": () => Promise.all([
+      import("@/assets/female-36-45-1.png"),
+      import("@/assets/female-36-45-2.png"),
+      import("@/assets/female-36-45-3.png"),
+      import("@/assets/female-36-45-4.png"),
+    ]),
+    "46-55": () => Promise.all([
+      import("@/assets/female-46-55-1.png"),
+      import("@/assets/female-46-55-2.png"),
+      import("@/assets/female-46-55-3.png"),
+      import("@/assets/female-46-55-4.png"),
+    ]),
+    "56+": () => Promise.all([
+      import("@/assets/female-56-plus-1.png"),
+      import("@/assets/female-56-plus-2.png"),
+      import("@/assets/female-56-plus-3.png"),
+      import("@/assets/female-56-plus-4.png"),
+    ]),
+  },
+};
+
+// Hook para carregar fotos sob demanda
+const useProfilePhotos = (gender: string, ageRange: string) => {
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useMemo(() => {
+    const loadPhotos = async () => {
+      setLoading(true);
+      const showMale = gender === "feminino";
+      const genderKey = showMale ? "male" : "female";
+      const currentAge = ageRange || "26-35";
+      
+      try {
+        const importFn = photoImports[genderKey][currentAge as keyof typeof photoImports.male];
+        if (importFn) {
+          const modules = await importFn();
+          setPhotos(modules.map(m => m.default));
+        }
+      } catch (error) {
+        console.error("Error loading photos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadPhotos();
+  }, [gender, ageRange]);
+
+  return { photos, loading };
+};
+
 const QuizFlow = () => {
   const [step, setStep] = useState(1);
   const [gender, setGender] = useState("");
@@ -172,7 +236,7 @@ const QuizFlow = () => {
         {/* Logo with glow effect */}
         <div className="flex justify-center mb-8">
           <div className="w-28 h-28 rounded-full shadow-glow-gold overflow-hidden border-2 border-gold-400/30">
-            <img src={heartLogo} alt="Coração" className="w-full h-full object-cover" />
+            <img src={heartLogo} alt="Coração" className="w-full h-full object-cover" loading="eager" />
           </div>
         </div>
 
@@ -470,121 +534,138 @@ const QuizFlow = () => {
 
   // Step 11: Results
   if (step === 11) {
-    const showMale = gender === "feminino";
-    const currentAgeRange = ageRange || "26-35";
-    const stateSigla = estadosSiglas[selectedState] || "BA";
-    
-    const photos = showMale 
-      ? (malePhotosByAge[currentAgeRange] || malePhotosByAge["26-35"])
-      : (femalePhotosByAge[currentAgeRange] || femalePhotosByAge["26-35"]);
-    const data = showMale 
-      ? (maleDataByAge[currentAgeRange] || maleDataByAge["26-35"])
-      : (femaleDataByAge[currentAgeRange] || femaleDataByAge["26-35"]);
-    const [minAge, maxAge] = data.ageRange;
-
-    const profiles = [
-      { name: data.names[randomIndex], age: getRandomAge(minAge, maxAge), distance: "4.7 km", state: stateSigla, locked: false, photo: photos[randomIndex] },
-      { name: data.names[(randomIndex + 1) % 4], age: getRandomAge(minAge, maxAge), distance: "2.2 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 1) % 4] },
-      { name: data.names[(randomIndex + 2) % 4], age: getRandomAge(minAge, maxAge), distance: "6.4 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 2) % 4] },
-      { name: data.names[(randomIndex + 3) % 4], age: getRandomAge(minAge, maxAge), distance: "7.9 km", state: stateSigla, locked: true, photo: photos[(randomIndex + 3) % 4] },
-    ];
-
-    return (
-      <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute w-72 h-72 bg-gold-400/15 rounded-full blur-3xl animate-pulse-glow" style={{ top: '10%', left: '5%' }} />
-          <div className="absolute w-96 h-96 bg-rose-400/10 rounded-full blur-3xl animate-pulse-glow" style={{ top: '50%', right: '5%', animationDelay: '1s' }} />
-          <div className="absolute w-80 h-80 bg-gold-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ bottom: '10%', left: '15%', animationDelay: '2s' }} />
-        </div>
-
-        <div className="relative z-10 px-4 py-4 max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <button onClick={goBack} className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-cream-100 hover:bg-white/10 hover:border-gold-400/30 transition-all flex-shrink-0">
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <div className="w-12 h-12 rounded-full gradient-button flex items-center justify-center shadow-glow-gold flex-shrink-0">
-              <Heart className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-cream-100">Encontramos <span className="text-gradient">4 conexões</span></h1>
-              <p className="text-cream-200/60 text-xs">Pessoas da sua região com valores similares</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            {profiles.map((profile, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-xl rounded-2xl p-2 border border-white/10 relative overflow-hidden hover:border-gold-400/30 transition-colors group">
-                <div className="w-full aspect-[5/4] rounded-xl overflow-hidden mb-2 relative">
-                  <img src={profile.photo} alt={profile.name} className={`w-full h-full object-cover ${profile.locked ? 'blur-md' : ''}`} />
-                  {!profile.locked && (
-                    <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-gold-400" />
-                      <span className="text-cream-100 text-xs font-medium">Compatível</span>
-                    </div>
-                  )}
-                </div>
-                <div className="text-center">
-                  <p className="text-cream-100 font-semibold text-sm">{profile.name}, {profile.age}</p>
-                  <p className="text-cream-200/50 text-xs">{profile.state} • {profile.distance}</p>
-                </div>
-                {profile.locked && (
-                  <div className="absolute inset-0 bg-navy-600/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                    <div className="text-center">
-                      <Lock className="w-6 h-6 text-gold-400 mx-auto mb-1" />
-                      <p className="text-gold-400 text-xs font-medium">Assine para ver</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-gradient-to-r from-gold-400/20 to-rose-400/20 rounded-2xl p-3 mb-3 border border-gold-400/30 hidden md:block">
-            <p className="text-gold-400 text-center text-sm font-medium flex items-center justify-center gap-2">
-              <Unlock className="w-4 h-4" />3 perfis bloqueados. Desbloqueie e conecte-se
-            </p>
-          </div>
-
-          <button onClick={goNext} className="hidden md:flex w-full gradient-button text-white py-3 px-4 rounded-2xl text-base font-semibold shadow-glow-gold hover:scale-[1.02] transition-all duration-300 items-center justify-center gap-2 mb-8">
-            Desbloquear Perfis<ArrowRight className="w-5 h-5" />
-          </button>
-
-          <div className="h-20 md:hidden"></div>
-
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">O Que Você Encontra</h2>
-            <p className="text-center text-cream-200/60 mb-6">Recursos exclusivos para membros</p>
-            <div className="grid grid-cols-3 gap-4">
-              {recursos.map((recurso, index) => (
-                <div key={index} className="group bg-white/5 backdrop-blur-xl rounded-3xl p-5 border border-white/10 hover:bg-white/10 hover:border-gold-400/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                  <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-gold-400/10 to-rose-400/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-gold-400/30 transition-colors">
-                    <img src={recurso.image} alt={recurso.title} className="w-full h-full object-cover" />
-                  </div>
-                  <h3 className="text-cream-100 font-semibold text-center text-sm group-hover:text-gold-400 transition-colors mb-1">{recurso.title}</h3>
-                  <p className="text-cream-200/50 text-center text-xs">{recurso.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background/95 to-transparent z-50">
-          <button onClick={goNext} className="w-full gradient-button text-white py-3.5 px-6 rounded-2xl text-base font-semibold shadow-glow-gold flex items-center justify-center gap-2">
-            Desbloquear Perfis<ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-    );
+    return <ResultsStep gender={gender} ageRange={ageRange} selectedState={selectedState} randomIndex={randomIndex} goBack={goBack} goNext={goNext} />;
   }
 
   // Step 12: Plans
+  return <PlansStep goBack={goBack} />;
+};
+
+// Componente separado para resultados - otimizado com lazy loading de fotos
+const ResultsStep = memo(({ gender, ageRange, selectedState, randomIndex, goBack, goNext }: {
+  gender: string;
+  ageRange: string;
+  selectedState: string;
+  randomIndex: number;
+  goBack: () => void;
+  goNext: () => void;
+}) => {
+  const { photos, loading } = useProfilePhotos(gender, ageRange);
+  
+  const showMale = gender === "feminino";
+  const currentAgeRange = ageRange || "26-35";
+  const stateSigla = estadosSiglas[selectedState] || "BA";
+  
+  const data = showMale 
+    ? (maleDataByAge[currentAgeRange] || maleDataByAge["26-35"])
+    : (femaleDataByAge[currentAgeRange] || femaleDataByAge["26-35"]);
+  const [minAge, maxAge] = data.ageRange;
+
+  const profiles = useMemo(() => [
+    { name: data.names[randomIndex], age: getRandomAge(minAge, maxAge), distance: "4.7 km", state: stateSigla, locked: false, photoIndex: randomIndex },
+    { name: data.names[(randomIndex + 1) % 4], age: getRandomAge(minAge, maxAge), distance: "2.2 km", state: stateSigla, locked: true, photoIndex: (randomIndex + 1) % 4 },
+    { name: data.names[(randomIndex + 2) % 4], age: getRandomAge(minAge, maxAge), distance: "6.4 km", state: stateSigla, locked: true, photoIndex: (randomIndex + 2) % 4 },
+    { name: data.names[(randomIndex + 3) % 4], age: getRandomAge(minAge, maxAge), distance: "7.9 km", state: stateSigla, locked: true, photoIndex: (randomIndex + 3) % 4 },
+  ], [data.names, randomIndex, minAge, maxAge, stateSigla]);
+
   return (
     <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-72 h-72 bg-gold-400/15 rounded-full blur-3xl animate-pulse-glow" style={{ top: '10%', left: '5%' }} />
-        <div className="absolute w-96 h-96 bg-rose-400/10 rounded-full blur-3xl animate-pulse-glow" style={{ top: '50%', right: '5%', animationDelay: '1s' }} />
-        <div className="absolute w-80 h-80 bg-gold-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ bottom: '10%', left: '15%', animationDelay: '2s' }} />
+      <DecorativeBackground />
+
+      <div className="relative z-10 px-4 py-4 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <button onClick={goBack} className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-cream-100 hover:bg-white/10 hover:border-gold-400/30 transition-all flex-shrink-0">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="w-12 h-12 rounded-full gradient-button flex items-center justify-center shadow-glow-gold flex-shrink-0">
+            <Heart className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-cream-100">Encontramos <span className="text-gradient">4 conexões</span></h1>
+            <p className="text-cream-200/60 text-xs">Pessoas da sua região com valores similares</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-3">
+          {profiles.map((profile, index) => (
+            <div key={index} className="bg-white/5 backdrop-blur-xl rounded-2xl p-2 border border-white/10 relative overflow-hidden hover:border-gold-400/30 transition-colors group">
+              <div className="w-full aspect-[5/4] rounded-xl overflow-hidden mb-2 relative bg-white/5">
+                {loading ? (
+                  <div className="w-full h-full animate-pulse bg-white/10" />
+                ) : photos[profile.photoIndex] ? (
+                  <LazyImage 
+                    src={photos[profile.photoIndex]} 
+                    alt={profile.name}
+                    className={`w-full h-full ${profile.locked ? 'blur-md' : ''}`}
+                  />
+                ) : null}
+                {!profile.locked && !loading && (
+                  <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm rounded-full px-2 py-0.5 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-gold-400" />
+                    <span className="text-cream-100 text-xs font-medium">Compatível</span>
+                  </div>
+                )}
+              </div>
+              <div className="text-center">
+                <p className="text-cream-100 font-semibold text-sm">{profile.name}, {profile.age}</p>
+                <p className="text-cream-200/50 text-xs">{profile.state} • {profile.distance}</p>
+              </div>
+              {profile.locked && (
+                <div className="absolute inset-0 bg-navy-600/60 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <div className="text-center">
+                    <Lock className="w-6 h-6 text-gold-400 mx-auto mb-1" />
+                    <p className="text-gold-400 text-xs font-medium">Assine para ver</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-gradient-to-r from-gold-400/20 to-rose-400/20 rounded-2xl p-3 mb-3 border border-gold-400/30 hidden md:block">
+          <p className="text-gold-400 text-center text-sm font-medium flex items-center justify-center gap-2">
+            <Unlock className="w-4 h-4" />3 perfis bloqueados. Desbloqueie e conecte-se
+          </p>
+        </div>
+
+        <button onClick={goNext} className="hidden md:flex w-full gradient-button text-white py-3 px-4 rounded-2xl text-base font-semibold shadow-glow-gold hover:scale-[1.02] transition-all duration-300 items-center justify-center gap-2 mb-8">
+          Desbloquear Perfis<ArrowRight className="w-5 h-5" />
+        </button>
+
+        <div className="h-20 md:hidden"></div>
+
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">O Que Você Encontra</h2>
+          <p className="text-center text-cream-200/60 mb-6">Recursos exclusivos para membros</p>
+          <div className="grid grid-cols-3 gap-4">
+            {recursos.map((recurso, index) => (
+              <div key={index} className="group bg-white/5 backdrop-blur-xl rounded-3xl p-5 border border-white/10 hover:bg-white/10 hover:border-gold-400/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-gold-400/10 to-rose-400/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-gold-400/30 transition-colors">
+                  <img src={recurso.image} alt={recurso.title} className="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <h3 className="text-cream-100 font-semibold text-center text-sm group-hover:text-gold-400 transition-colors mb-1">{recurso.title}</h3>
+                <p className="text-cream-200/50 text-center text-xs">{recurso.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background/95 to-transparent z-50">
+        <button onClick={goNext} className="w-full gradient-button text-white py-3.5 px-6 rounded-2xl text-base font-semibold shadow-glow-gold flex items-center justify-center gap-2">
+          Desbloquear Perfis<ArrowRight className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  );
+});
+ResultsStep.displayName = "ResultsStep";
+
+// Componente separado para planos
+const PlansStep = memo(({ goBack }: { goBack: () => void }) => {
+  return (
+    <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay">
+      <DecorativeBackground />
 
       <div className="relative z-10 px-4 py-8 max-w-4xl mx-auto">
         <button onClick={goBack} className="mb-6 w-11 h-11 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-cream-100 hover:bg-white/10 hover:border-gold-400/30 transition-all">
@@ -593,24 +674,16 @@ const QuizFlow = () => {
 
         <div className="flex items-center justify-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold-400/30 shadow-glow-gold">
-            <img src={heartLogo} alt="Logo" className="w-full h-full object-cover" />
+            <img src={heartLogo} alt="Logo" className="w-full h-full object-cover" loading="lazy" />
           </div>
           <span className="text-cream-100 text-2xl font-bold">Encontro <span className="text-gradient">com Fé</span></span>
         </div>
 
-        {/* Video Section */}
+        {/* Video Section - Lazy loaded */}
         <div className="mb-10">
           <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">Veja Como Funciona</h2>
           <p className="text-center text-cream-200/60 mb-6">Conheça nossa plataforma e histórias de sucesso</p>
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-glow-gold border border-gold-400/30">
-            <iframe
-              src="https://www.youtube.com/embed/QTvgTq9cq8E"
-              title="Como Funciona - Encontro com Fé"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full"
-            />
-          </div>
+          <LazyYouTube videoId="QTvgTq9cq8E" title="Como Funciona - Encontro com Fé" />
         </div>
 
         <h2 className="text-2xl font-bold text-center text-cream-100 mb-2">ESCOLHA SEU PLANO</h2>
@@ -689,6 +762,7 @@ const QuizFlow = () => {
       </div>
     </div>
   );
-};
+});
+PlansStep.displayName = "PlansStep";
 
 export default QuizFlow;

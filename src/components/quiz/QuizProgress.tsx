@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface QuizProgressProps {
   current: number;
   total: number;
 }
 
-const QuizProgress = ({ current, total }: QuizProgressProps) => {
+const QuizProgress = memo(({ current, total }: QuizProgressProps) => {
   const percentage = (current / total) * 100;
 
   return (
@@ -20,6 +22,8 @@ const QuizProgress = ({ current, total }: QuizProgressProps) => {
       </div>
     </div>
   );
-};
+});
+
+QuizProgress.displayName = "QuizProgress";
 
 export default QuizProgress;
