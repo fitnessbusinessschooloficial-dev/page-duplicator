@@ -248,14 +248,14 @@ const Pagina11 = () => {
             Recursos exclusivos para membros
           </p>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex flex-col gap-6 md:grid md:grid-cols-3 md:gap-4">
             {recursos.map((recurso, index) => (
               <div
                 key={index}
-                className="group bg-white/10 backdrop-blur-lg rounded-3xl p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                className="group bg-white/10 backdrop-blur-lg rounded-3xl p-4 md:p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
-                {/* Image container */}
-                <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
+                {/* Image container - much larger on mobile */}
+                <div className="w-full aspect-[4/3] md:aspect-square rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
                   {recurso.image ? (
                     <img 
                       src={recurso.image} 
@@ -270,11 +270,11 @@ const Pagina11 = () => {
                   )}
                 </div>
                 
-                {/* Title and Description */}
-                <h3 className="text-white font-semibold text-center text-sm group-hover:text-amber-400 transition-colors mb-1">
+                {/* Title and Description - larger text on mobile */}
+                <h3 className="text-white font-semibold text-center text-base md:text-sm group-hover:text-amber-400 transition-colors mb-1">
                   {recurso.title}
                 </h3>
-                <p className="text-white/60 text-center text-xs">
+                <p className="text-white/60 text-center text-sm md:text-xs">
                   {recurso.description}
                 </p>
               </div>
