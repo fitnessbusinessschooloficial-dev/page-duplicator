@@ -80,6 +80,7 @@ const plans = [
     icon: Zap,
     features: ["Perfil completo + fotos", "Chat básico", "Suporte por email"],
     popular: false,
+    checkoutUrl: "https://www.ggcheckout.com/checkout/v2/6831cK9hFOGY3vCrbv5c",
   },
   {
     name: "ACESSO MENSAL",
@@ -89,6 +90,7 @@ const plans = [
     features: ["Todos os recursos semanal", "Conexões ilimitadas", "Chat + ligações", "Filtros avançados"],
     popular: true,
     savings: "MAIS POPULAR",
+    checkoutUrl: "https://www.ggcheckout.com/checkout/v2/lMKMsb29P6rTJTwGpbfx",
   },
   {
     name: "ACESSO ANUAL",
@@ -98,6 +100,7 @@ const plans = [
     features: ["Todos os recursos mensal", "Chamadas de vídeo", "Todos os grupos", "Suporte whatsapp"],
     popular: false,
     savings: "Economia de 83%",
+    checkoutUrl: "https://www.ggcheckout.com/checkout/v2/0S5sEXCLzQYeDX5tRhd9",
   },
 ];
 
@@ -843,9 +846,14 @@ const PlansStep = memo(({ goBack }: { goBack: () => void }) => {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-3 md:py-3.5 rounded-2xl font-semibold transition-all duration-300 text-sm md:text-base ${plan.popular ? 'gradient-button text-white hover:scale-[1.02] shadow-glow-gold' : 'bg-white/10 text-cream-100 hover:bg-white/15 hover:border-gold-400/30 border border-white/10'}`}>
+                <a 
+                  href={plan.checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 md:py-3.5 rounded-2xl font-semibold transition-all duration-300 text-sm md:text-base text-center block ${plan.popular ? 'gradient-button text-white hover:scale-[1.02] shadow-glow-gold' : 'bg-white/10 text-cream-100 hover:bg-white/15 hover:border-gold-400/30 border border-white/10'}`}
+                >
                   Assinar Agora
-                </button>
+                </a>
               </div>
             );
           })}
