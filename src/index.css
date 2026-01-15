@@ -154,7 +154,7 @@
   }
 }
 
-/* Animation keyframes */
+/* Animation keyframes - optimized */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) scale(1);
@@ -166,6 +166,7 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Glow effect for icons */
@@ -177,7 +178,7 @@
   filter: drop-shadow(0 0 20px hsla(345, 50%, 55%, 0.4));
 }
 
-/* Subtle grain texture overlay */
+/* Subtle grain texture overlay - optimized for mobile */
 .texture-overlay::before {
   content: '';
   position: absolute;
@@ -193,4 +194,51 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-glow,
+  .shimmer {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  .blur-3xl {
+    filter: blur(48px);
+  }
+  
+  .backdrop-blur-xl {
+    backdrop-filter: blur(16px);
+  }
+  
+  /* Reduce shadow complexity on mobile */
+  .shadow-glow-gold {
+    box-shadow: 0 4px 20px hsla(38, 85%, 55%, 0.2);
+  }
+  
+  .shadow-glow-rose {
+    box-shadow: 0 4px 20px hsla(345, 50%, 55%, 0.2);
+  }
+}
+
+/* GPU acceleration hints */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Optimize backdrop-filter performance */
+@supports (backdrop-filter: blur(1px)) {
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
 }

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { LucideIcon } from "lucide-react";
 
 interface QuizOptionProps {
@@ -7,7 +8,7 @@ interface QuizOptionProps {
   selected?: boolean;
 }
 
-const QuizOption = ({ icon: Icon, label, onClick, selected }: QuizOptionProps) => {
+const QuizOption = memo(({ icon: Icon, label, onClick, selected }: QuizOptionProps) => {
   return (
     <button
       onClick={onClick}
@@ -23,6 +24,8 @@ const QuizOption = ({ icon: Icon, label, onClick, selected }: QuizOptionProps) =
       <span className="text-cream-100 text-lg font-medium group-hover:text-gold-400 transition-colors">{label}</span>
     </button>
   );
-};
+});
+
+QuizOption.displayName = "QuizOption";
 
 export default QuizOption;
