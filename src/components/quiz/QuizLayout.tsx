@@ -43,8 +43,8 @@ const QuizLayout = ({ children, showBackButton, onBack }: QuizLayoutProps) => {
         </button>
       )}
 
-      {/* Main content */}
-      <div className="max-w-md w-full relative z-10">
+      {/* Main content with animation */}
+      <div className="max-w-md w-full relative z-10 animate-slide-in">
         {children}
       </div>
     </div>

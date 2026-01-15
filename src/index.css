@@ -196,6 +196,94 @@
   background-clip: text;
 }
 
+/* Quiz step transition animations */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideInFromRight 0.4s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Loading screen animations */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.animate-progress-fill {
+  animation: progress-fill 3s ease-in-out forwards;
+}
+
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-float,
