@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, lazy, Suspense, memo } from "react";
+import { useState, useCallback, useMemo, memo, useEffect } from "react";
 import QuizLayout from "@/components/quiz/QuizLayout";
 import QuizOption from "@/components/quiz/QuizOption";
 import QuizProgress from "@/components/quiz/QuizProgress";
@@ -10,7 +10,7 @@ import {
   CheckCircle, Clock, RefreshCw, XCircle, Gem, HeartHandshake, Search, 
   Handshake, Star, Sparkles, CircleDot, HelpCircle, Baby, UsersRound, Ban,
   Shield, Lock, ShieldCheck, Zap, Crown, Map, MessageCircle, Headphones,
-  ArrowRight, Check, ChevronLeft, Unlock
+  ArrowRight, Check, ChevronLeft, Unlock, Loader2
 } from "lucide-react";
 
 // Cards de recursos - mantidos pois são usados na tela de resultados
@@ -120,6 +120,109 @@ const DecorativeBackground = memo(() => (
 ));
 DecorativeBackground.displayName = "DecorativeBackground";
 
+// Componente de tela de carregamento
+const LoadingScreen = memo(({ onComplete }: { onComplete: () => void }) => {
+  const [progress, setProgress] = useState(0);
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  const messages = [
+    "Analisando suas respostas...",
+    "Buscando pessoas compatíveis...",
+    "Calculando afinidades...",
+    "Encontrando conexões na sua região...",
+    "Preparando seus resultados..."
+  ];
+
+  useEffect(() => {
+    const duration = 3500; // 3.5 seconds total
+    const interval = 50;
+    const steps = duration / interval;
+    let currentStep = 0;
+
+    const progressTimer = setInterval(() => {
+      currentStep++;
+      const newProgress = Math.min((currentStep / steps) * 100, 100);
+      setProgress(newProgress);
+
+      if (currentStep >= steps) {
+        clearInterval(progressTimer);
+        setTimeout(onComplete, 300);
+      }
+    }, interval);
+
+    const messageTimer = setInterval(() => {
+      setCurrentMessage(prev => (prev + 1) % messages.length);
+    }, 700);
+
+    return () => {
+      clearInterval(progressTimer);
+      clearInterval(messageTimer);
+    };
+  }, [onComplete, messages.length]);
+
+  return (
+    <div className="min-h-screen gradient-welcome relative overflow-hidden texture-overlay flex items-center justify-center">
+      <DecorativeBackground />
+      
+      <div className="relative z-10 text-center px-6 animate-fade-in-up">
+        {/* Animated circles */}
+        <div className="relative w-32 h-32 mx-auto mb-8">
+          <div className="absolute inset-0 rounded-full border-4 border-gold-400/20 animate-pulse-ring" />
+          <div className="absolute inset-2 rounded-full border-4 border-rose-400/20 animate-pulse-ring" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute inset-4 rounded-full border-4 border-gold-400/30 animate-pulse-ring" style={{ animationDelay: '1s' }} />
+          
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full gradient-button flex items-center justify-center shadow-glow-gold">
+              <Heart className="w-10 h-10 text-white animate-pulse" />
+            </div>
+          </div>
+          
+          {/* Orbiting dots */}
+          <div className="absolute inset-0 animate-spin-slow">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gold-400" />
+          </div>
+          <div className="absolute inset-0 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '4s' }}>
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-rose-400" />
+          </div>
+        </div>
+
+        {/* Loading message */}
+        <p className="text-cream-100 text-xl font-semibold mb-2 h-7 transition-all duration-300">
+          {messages[currentMessage]}
+        </p>
+        <p className="text-cream-200/60 text-sm mb-8">
+          Aguarde um momento
+        </p>
+
+        {/* Progress bar */}
+        <div className="w-64 mx-auto h-2 bg-white/10 rounded-full overflow-hidden">
+          <div 
+            className="h-full gradient-button rounded-full transition-all duration-100 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <p className="text-gold-400 text-sm mt-3 font-medium">
+          {Math.round(progress)}%
+        </p>
+
+        {/* Stats preview */}
+        <div className="mt-10 flex justify-center gap-8 text-cream-200/50 text-sm">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-gold-400" />
+            <span>5.000+ pessoas</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-rose-400" />
+            <span>Na sua região</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+LoadingScreen.displayName = "LoadingScreen";
+
+
 // Importações dinâmicas das fotos
 const photoImports = {
   male: {
@@ -225,9 +328,34 @@ const QuizFlow = () => {
   const [ageRange, setAgeRange] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [randomIndex] = useState(() => Math.floor(Math.random() * 4));
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
-  const goNext = useCallback(() => setStep(s => s + 1), []);
-  const goBack = useCallback(() => setStep(s => Math.max(1, s - 1)), []);
+  const goNext = useCallback(() => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setStep(s => s + 1);
+      setIsAnimating(false);
+    }, 150);
+  }, []);
+
+  const goBack = useCallback(() => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setStep(s => Math.max(1, s - 1));
+      setIsAnimating(false);
+    }, 150);
+  }, []);
+
+  // Special handler for step 10 -> 11 with loading screen
+  const goToResults = useCallback(() => {
+    setShowLoading(true);
+  }, []);
+
+  // Loading screen after step 10
+  if (showLoading) {
+    return <LoadingScreen onComplete={() => { setShowLoading(false); setStep(11); }} />;
+  }
 
   // Step 1: Welcome
   if (step === 1) {
@@ -525,7 +653,7 @@ const QuizFlow = () => {
         <h1 className="text-3xl font-bold text-center text-cream-100 mb-8">Sobre ter filhos:</h1>
         <div className="space-y-3">
           {options.map((opt) => (
-            <QuizOption key={opt.label} icon={opt.icon} label={opt.label} onClick={goNext} />
+            <QuizOption key={opt.label} icon={opt.icon} label={opt.label} onClick={goToResults} />
           ))}
         </div>
       </QuizLayout>
