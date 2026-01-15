@@ -5,6 +5,18 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Allowed TikTok event names for validation
+const ALLOWED_EVENTS = [
+  'ViewContent',
+  'CompleteRegistration',
+  'AddToCart',
+  'InitiateCheckout',
+  'Purchase',
+  'Search',
+  'AddPaymentInfo',
+  'PlaceAnOrder',
+];
+
 interface TikTokEventProperties {
   value?: number;
   currency?: string;
@@ -31,16 +43,33 @@ serve(async (req) => {
   }
 
   try {
+    // Validate authorization header
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const accessToken = Deno.env.get('TIKTOK_ACCESS_TOKEN');
     if (!accessToken) {
-      throw new Error('TIKTOK_ACCESS_TOKEN not configured');
+      console.error('TIKTOK_ACCESS_TOKEN not configured');
+      return new Response(
+        JSON.stringify({ error: 'Service configuration error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const body: TikTokEventRequest = await req.json();
     const { event, event_id, properties, url, user_agent, ttclid, ttp } = body;
 
-    if (!event) {
-      throw new Error('Event name is required');
+    // Validate event name
+    if (!event || !ALLOWED_EVENTS.includes(event)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid event type' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // Get client IP from request headers
@@ -110,7 +139,7 @@ serve(async (req) => {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error sending TikTok event:', errorMessage);
     return new Response(
-      JSON.stringify({ success: false, error: errorMessage }),
+      JSON.stringify({ success: false, error: 'Failed to process event' }),
       { 
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
