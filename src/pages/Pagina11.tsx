@@ -248,22 +248,22 @@ const Pagina11 = () => {
             Recursos exclusivos para membros
           </p>
 
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-3 md:gap-4">
+          <div className="flex flex-col gap-5 md:grid md:grid-cols-3 md:gap-4">
             {recursos.map((recurso, index) => (
               <div
                 key={index}
-                className="group bg-white/10 backdrop-blur-lg rounded-3xl p-4 md:p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                className="group bg-white/10 backdrop-blur-lg rounded-3xl p-3 md:p-5 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
-                {/* Image container - much larger on mobile */}
-                <div className="w-full aspect-[4/3] md:aspect-square rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
+                {/* Image container - full width on mobile for maximum visibility */}
+                <div className="w-full rounded-2xl bg-gradient-to-br from-white/10 to-white/5 mb-3 md:mb-4 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-amber-400/30 transition-colors">
                   {recurso.image ? (
                     <img 
                       src={recurso.image} 
                       alt={recurso.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto object-contain"
                     />
                   ) : (
-                    <div className="text-center p-4">
+                    <div className="text-center p-4 aspect-square">
                       <span className="text-4xl opacity-50">🖼️</span>
                       <p className="text-white/30 text-xs mt-2">Imagem</p>
                     </div>
@@ -271,10 +271,10 @@ const Pagina11 = () => {
                 </div>
                 
                 {/* Title and Description - larger text on mobile */}
-                <h3 className="text-white font-semibold text-center text-base md:text-sm group-hover:text-amber-400 transition-colors mb-1">
+                <h3 className="text-white font-semibold text-center text-lg md:text-sm group-hover:text-amber-400 transition-colors mb-1">
                   {recurso.title}
                 </h3>
-                <p className="text-white/60 text-center text-sm md:text-xs">
+                <p className="text-white/60 text-center text-base md:text-xs">
                   {recurso.description}
                 </p>
               </div>
