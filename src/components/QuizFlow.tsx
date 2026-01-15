@@ -693,28 +693,29 @@ const PlansStep = memo(({ goBack }: { goBack: () => void }) => {
           {plans.map((plan, index) => {
             const PlanIcon = plan.icon;
             return (
-              <div key={index} className={`bg-white/5 backdrop-blur-xl rounded-3xl p-6 border ${plan.popular ? 'border-gold-400 ring-2 ring-gold-400/30 shadow-glow-gold' : 'border-white/10 hover:border-gold-400/30'} relative transition-all duration-300 hover:scale-[1.02]`}>
+              <div key={index} className={`bg-white/5 backdrop-blur-xl rounded-3xl p-6 border ${plan.popular ? 'border-gold-400 ring-2 ring-gold-400/30 shadow-glow-gold' : 'border-white/10 hover:border-gold-400/30'} relative transition-all duration-300 hover:scale-[1.02] overflow-hidden`}>
                 {plan.savings && (
-                  <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold ${plan.popular ? 'gradient-button text-white' : 'bg-rose-500 text-white'}`}>
+                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 px-4 py-1 rounded-b-xl text-xs font-bold whitespace-nowrap ${plan.popular ? 'gradient-button text-white' : 'bg-rose-500 text-white'}`}>
                     {plan.savings}
                   </div>
                 )}
-                <div className="flex justify-center mb-4 mt-2">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold-400/30 to-rose-400/20 flex items-center justify-center border border-gold-400/30">
+                <div className="flex justify-center mb-4 mt-4">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold-400/30 to-rose-400/20 flex items-center justify-center border border-gold-400/30 flex-shrink-0">
                     <PlanIcon className="w-8 h-8 text-gold-400" />
                   </div>
                 </div>
-                <h3 className="text-cream-100 font-bold text-center mb-2">{plan.name}</h3>
-                <p className="text-4xl font-bold text-center text-cream-100 mb-1">{plan.price}</p>
-                <p className="text-cream-200/50 text-sm text-center mb-5">{plan.period}</p>
-                <ul className="space-y-3 mb-6">
+                <h3 className="text-cream-100 font-bold text-center mb-2 text-sm md:text-base">{plan.name}</h3>
+                <p className="text-3xl md:text-4xl font-bold text-center text-cream-100 mb-1">{plan.price}</p>
+                <p className="text-cream-200/50 text-xs md:text-sm text-center mb-5">{plan.period}</p>
+                <ul className="space-y-2 mb-6">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-cream-200/80 text-sm">
-                      <Check className="w-4 h-4 text-gold-400 flex-shrink-0" />{feature}
+                    <li key={i} className="flex items-start gap-2 text-cream-200/80 text-xs md:text-sm">
+                      <Check className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
+                      <span className="break-words">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-3.5 rounded-2xl font-semibold transition-all duration-300 ${plan.popular ? 'gradient-button text-white hover:scale-[1.02] shadow-glow-gold' : 'bg-white/10 text-cream-100 hover:bg-white/15 hover:border-gold-400/30 border border-white/10'}`}>
+                <button className={`w-full py-3 md:py-3.5 rounded-2xl font-semibold transition-all duration-300 text-sm md:text-base ${plan.popular ? 'gradient-button text-white hover:scale-[1.02] shadow-glow-gold' : 'bg-white/10 text-cream-100 hover:bg-white/15 hover:border-gold-400/30 border border-white/10'}`}>
                   Assinar Agora
                 </button>
               </div>
@@ -722,29 +723,29 @@ const PlansStep = memo(({ goBack }: { goBack: () => void }) => {
           })}
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-5 mb-10 border border-white/10 hover:border-gold-400/30 transition-colors">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-400/20 to-rose-400/10 flex items-center justify-center border border-white/10 flex-shrink-0">
-              <Shield className="w-6 h-6 text-gold-400" />
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-4 md:p-5 mb-10 border border-white/10 hover:border-gold-400/30 transition-colors">
+          <div className="flex items-start gap-3 md:gap-4">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-gold-400/20 to-rose-400/10 flex items-center justify-center border border-white/10 flex-shrink-0">
+              <Shield className="w-5 h-5 md:w-6 md:h-6 text-gold-400" />
             </div>
-            <div>
-              <p className="text-cream-100 font-semibold mb-1">GARANTIA LEGAL</p>
-              <p className="text-cream-200/60 text-sm">Conforme Código de Defesa do Consumidor, você tem o direito ao arrependimento em até 7 dias após a compra com reembolso integral.</p>
+            <div className="min-w-0">
+              <p className="text-cream-100 font-semibold mb-1 text-sm md:text-base">GARANTIA LEGAL</p>
+              <p className="text-cream-200/60 text-xs md:text-sm break-words">Conforme Código de Defesa do Consumidor, você tem o direito ao arrependimento em até 7 dias após a compra com reembolso integral.</p>
             </div>
           </div>
         </div>
 
         <h3 className="text-xl font-bold text-center text-cream-100 mb-6">Nossa Comunidade</h3>
-        <div className="grid grid-cols-4 gap-4 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10">
           {stats.map((stat, index) => {
             const StatIcon = stat.icon;
             return (
-              <div key={index} className="text-center bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 hover:border-gold-400/30 transition-colors">
+              <div key={index} className="text-center bg-white/5 backdrop-blur-xl rounded-2xl p-3 md:p-4 border border-white/10 hover:border-gold-400/30 transition-colors overflow-hidden">
                 <div className="flex justify-center mb-2">
-                  <StatIcon className="w-6 h-6 text-gold-400" />
+                  <StatIcon className="w-5 h-5 md:w-6 md:h-6 text-gold-400" />
                 </div>
-                <p className="text-2xl font-bold text-gold-400">{stat.value}</p>
-                <p className="text-cream-200/50 text-sm">{stat.label}</p>
+                <p className="text-xl md:text-2xl font-bold text-gold-400">{stat.value}</p>
+                <p className="text-cream-200/50 text-xs md:text-sm truncate">{stat.label}</p>
               </div>
             );
           })}
